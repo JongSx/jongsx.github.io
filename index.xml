@@ -11,6 +11,7 @@
     <pubDate>Mon, 19 Oct 2020 16:12:16 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/posts/ssh-agent-startup-on-wsl/</guid>
-    <description><![CDATA[testing]]></description>
+    <description><![CDATA[ohmyzsh 插件 在安装了ohmyzsh的情况下，编辑.vimrc文件，并启用ssh-agent插件即可。插件会在开启zsh时，启动ssh-agent，并添加.ssh目录下的identifier。
+参考 ]]></description>
 </item></channel>
 </rss>
