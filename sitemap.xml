@@ -2,7 +2,8 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://example.org/posts/</loc><lastmod>2020-10-19T20:17:24&#43;08:00</lastmod></url><url>
+            <loc>http://example.org/posts/build-website-with-hugo/</loc><lastmod>2020-10-19T23:25:57&#43;08:00</lastmod></url><url>
+            <loc>http://example.org/posts/</loc><lastmod>2020-10-19T23:25:57&#43;08:00</lastmod></url><url>
             <loc>http://example.org/posts/how-to-remove-git-submodule/</loc><lastmod>2020-10-19T20:17:24&#43;08:00</lastmod></url><url>
             <loc>http://example.org/posts/ssh-agent-startup-on-wsl/</loc><lastmod>2020-10-19T16:12:16&#43;08:00</lastmod></url><url>
             <loc>http://example.org/dailies/</loc><lastmod>2020-04-03T22:57:07&#43;00:00</lastmod></url><url>
