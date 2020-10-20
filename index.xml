@@ -6,6 +6,15 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2020 22:57:07 &#43;0000</lastBuildDate>
             <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Vim Usage</title>
+    <link>http://example.org/posts/vim-usage/</link>
+    <pubDate>Tue, 20 Oct 2020 22:41:39 &#43;0800</pubDate>
+    <author>作者</author>
+    <guid>http://example.org/posts/vim-usage/</guid>
+    <description><![CDATA[介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
+常用命令 下面列出我常用到的命令和其作用。
+分屏 分屏有两种，垂直或者水平分屏。]]></description>
+</item><item>
     <title>Hugo 构建Github Pages</title>
     <link>http://example.org/posts/build-website-with-hugo/</link>
     <pubDate>Mon, 19 Oct 2020 23:25:57 &#43;0800</pubDate>
