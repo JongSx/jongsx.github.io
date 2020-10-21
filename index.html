@@ -103,14 +103,26 @@
         <a href="/posts/vim-usage/">Vim Usage</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-20">2020-10-20</time></span></div><div class="content">介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
 常用命令 下面列出我常用到的命令和其作用。
-分屏 分屏有两种，垂直或者水平分屏。</div><div class="post-footer">
+分屏  垂直分屏：:vsplit； 水平分屏：:split；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
+ 调整高度：:resize number； 调整宽度：:vertical resize number；  也可以用递增或递减的方式来调整，
+ 增加高度：:resize +number； 减少高度：:resize -number；  切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
+可以双击ctrl + w进行轮流切换，也可以通过ctrl + w + 方向键（或者hjkl）来切换到指定的窗口。
+Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是，你可以创建一个新的tab。 tab会以数字下标排序，显示在顶部，像下面这样,
+常用的操控tab的命令如下，
+ 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。
+vimrc的安装方法，见项目README。
+插件 vimrc帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。
+NERDtree NERD Tree可以让我们在vim中便捷的访问目录结构，在NOMAL模式下，输入:NERDTree后，会在右侧显示一个explorer。
+常用的快捷键如下（需要先切换至NERDTree打开的窗口）：
+ 刷新当前根目录：O，输入shift + o即可; 刷新当前光标所指的目录：o； 在新的tab中打开当前文件或目录：t； 在新的tab中打开当前文件或目录，但不切换过去：T； 显示隐藏文件I  如果你想让NERD Tree始终显示隐藏文件，你可以修改.vimrc文件，并在末尾加上如下内容，
+1  let NERDTreeShowHidden=1  参考  Resize split more quickly: https://vim.</div><div class="post-footer">
         <a href="/posts/vim-usage/">阅读全文</a></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/build-website-with-hugo/">Hugo 构建Github Pages</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">背景 决定从Hexo迁移至Hugo，不再使用Hexo了。由于Hexo的官方文档缺乏维护，对我而且使用起来不方便，其次也不利于主题的开发。迁移的方法并不复杂，下面让我们开始吧。
 前置需求 我们需要，
  一个your_github_user_name.github.io仓库； 一个用于保存Hugo内容的仓库（假设名字为blog）； travis ci账户，使用github账户登录并赋予其访问相关仓库的权限即可； 有条件的话，可以申请一个自己的域名。  编写 .travis.yml 现在假设你已经将Hugo创建的文件保存至blog仓库了，为了让travis ci帮我们进行自动部署，还需要在blog仓库的根目录下放置一个.travis.yml配置文件，用于告知travis ci该如何进行操作。 .travis.yml文件的内容如下（仅限参考），
-# 使用Ubuntu20.04dist:focallanguage:gogo:- 1.15# 安装Hugobefore_install:- sudoapt-getupdate- sudoapt-getinstallhugo-y--fix-missingscript:- hugo-Ddeploy:repo:your_github_user_name/your_github_user_name.github.ioprovider:pagesskip-cleanup:truegithub-token:$GH_TOKENkeep-history:true# 目前github上创建仓库后的主分支名变为了main，你需要把*.github.io的主分支名改为mastertarget_branch:masteron:branch:mainlocal-dir:public# 自定义域名，可以不添加该字段fqdn:your_domaindeploy字段中各个值的含义，可以参看travis ci的官方文档[1]。
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24  # 使用Ubuntu20.04dist:focallanguage:gogo:- 1.15# 安装Hugobefore_install:- sudoapt-getupdate- sudoapt-getinstallhugo-y--fix-missingscript:- hugo-Ddeploy:repo:your_github_user_name/your_github_user_name.github.ioprovider:pagesskip-cleanup:truegithub-token:$GH_TOKENkeep-history:true# 目前github上创建仓库后的主分支名变为了main，你需要把*.github.io的主分支名改为mastertarget_branch:masteron:branch:mainlocal-dir:public# 自定义域名，可以不添加该字段fqdn:your_domain  deploy字段中各个值的含义，可以参看travis ci的官方文档[1]。
 将.travis.yml文件提交至你的blog仓库中，之后我们需要在travis ci中，进行配置，为我们的blog仓库添加一个环境变量（GH_TOKEN）。
 你可以在 github.com-&gt;setting-&gt;Developer setting-&gt;Personal access tokens中生成一个，并设置相应权限。
 参考  Github Pages Deployment: https://docs.travis-ci.com/user/deployment/pages/  </div><div class="post-footer">

@@ -8,7 +8,19 @@
         <title>Vim Usage - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="Vim Usage" />
 <meta property="og:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
 常用命令 下面列出我常用到的命令和其作用。
-分屏 分屏有两种，垂直或者水平分屏。" />
+分屏  垂直分屏：:vsplit； 水平分屏：:split；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
+ 调整高度：:resize number； 调整宽度：:vertical resize number；  也可以用递增或递减的方式来调整，
+ 增加高度：:resize &#43;number； 减少高度：:resize -number；  切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
+可以双击ctrl &#43; w进行轮流切换，也可以通过ctrl &#43; w &#43; 方向键（或者hjkl）来切换到指定的窗口。
+Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是，你可以创建一个新的tab。 tab会以数字下标排序，显示在顶部，像下面这样,
+常用的操控tab的命令如下，
+ 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。
+vimrc的安装方法，见项目README。
+插件 vimrc帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。
+NERDtree NERD Tree可以让我们在vim中便捷的访问目录结构，在NOMAL模式下，输入:NERDTree后，会在右侧显示一个explorer。
+常用的快捷键如下（需要先切换至NERDTree打开的窗口）：
+ 刷新当前根目录：O，输入shift &#43; o即可; 刷新当前光标所指的目录：o； 在新的tab中打开当前文件或目录：t； 在新的tab中打开当前文件或目录，但不切换过去：T； 显示隐藏文件I  如果你想让NERD Tree始终显示隐藏文件，你可以修改.vimrc文件，并在末尾加上如下内容，
+1  let NERDTreeShowHidden=1  参考  Resize split more quickly: https://vim." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://example.org/posts/vim-usage/" />
 <meta property="article:published_time" content="2020-10-20T22:41:39+08:00" />
@@ -17,7 +29,19 @@
 <meta name="twitter:title" content="Vim Usage"/>
 <meta name="twitter:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
 常用命令 下面列出我常用到的命令和其作用。
-分屏 分屏有两种，垂直或者水平分屏。"/>
+分屏  垂直分屏：:vsplit； 水平分屏：:split；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
+ 调整高度：:resize number； 调整宽度：:vertical resize number；  也可以用递增或递减的方式来调整，
+ 增加高度：:resize &#43;number； 减少高度：:resize -number；  切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
+可以双击ctrl &#43; w进行轮流切换，也可以通过ctrl &#43; w &#43; 方向键（或者hjkl）来切换到指定的窗口。
+Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是，你可以创建一个新的tab。 tab会以数字下标排序，显示在顶部，像下面这样,
+常用的操控tab的命令如下，
+ 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。
+vimrc的安装方法，见项目README。
+插件 vimrc帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。
+NERDtree NERD Tree可以让我们在vim中便捷的访问目录结构，在NOMAL模式下，输入:NERDTree后，会在右侧显示一个explorer。
+常用的快捷键如下（需要先切换至NERDTree打开的窗口）：
+ 刷新当前根目录：O，输入shift &#43; o即可; 刷新当前光标所指的目录：o； 在新的tab中打开当前文件或目录：t； 在新的tab中打开当前文件或目录，但不切换过去：T； 显示隐藏文件I  如果你想让NERD Tree始终显示隐藏文件，你可以修改.vimrc文件，并在末尾加上如下内容，
+1  let NERDTreeShowHidden=1  参考  Resize split more quickly: https://vim."/>
 <meta name="application-name" content="Trganda&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Trganda&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -30,7 +54,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/posts\/vim-usage\/"
-        },"genre": "posts","wordcount":  6 ,
+        },"genre": "posts","wordcount":  80 ,
         "url": "http:\/\/example.org\/posts\/vim-usage\/","datePublished": "2020-10-20T22:41:39+08:00","dateModified": "2020-10-20T22:41:39+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
@@ -107,7 +131,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Vim Usage</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-20">2020-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-20">2020-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 80 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -116,20 +140,108 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#介绍">介绍</a></li>
+    <li><a href="#常用命令">常用命令</a>
       <ul>
-        <li><a href="#介绍">介绍</a></li>
-        <li><a href="#常用命令">常用命令</a></li>
+        <li><a href="#分屏">分屏</a></li>
+        <li><a href="#控制分屏窗口大小">控制分屏窗口大小</a></li>
+        <li><a href="#切换窗口">切换窗口</a></li>
+        <li><a href="#tab">Tab</a></li>
       </ul>
     </li>
+    <li><a href="#拓展工具">拓展工具</a>
+      <ul>
+        <li><a href="#插件">插件</a></li>
+        <li><a href="#nerdtree">NERDtree</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h3 id="介绍">介绍</h3>
+            </div><div class="content" id="content"><h2 id="介绍">介绍</h2>
 <p>以下记录使用<code>vim</code>的过程中学习到的东西（快捷键，插件，遇到的问题等）。</p>
-<h3 id="常用命令">常用命令</h3>
+<h2 id="常用命令">常用命令</h2>
 <p>下面列出我常用到的命令和其作用。</p>
-<h4 id="分屏">分屏</h4>
-<p>分屏有两种，垂直或者水平分屏。</p>
+<h3 id="分屏">分屏</h3>
+<ul>
+<li>垂直分屏：<code>:vsplit</code>；</li>
+<li>水平分屏：<code>:split</code>；</li>
+</ul>
+<h3 id="控制分屏窗口大小">控制分屏窗口大小</h3>
+<p>默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），</p>
+<ul>
+<li>调整高度：<code>:resize number</code>；</li>
+<li>调整宽度：<code>:vertical resize number</code>；</li>
+</ul>
+<p>也可以用递增或递减的方式来调整，</p>
+<ul>
+<li>增加高度：<code>:resize +number</code>；</li>
+<li>减少高度：<code>:resize -number</code>；</li>
+</ul>
+<h3 id="切换窗口">切换窗口</h3>
+<p>在通过<code>:split</code>和<code>vsplit</code>命令进行划分之后，需要进行窗口的切换。</p>
+<p>可以双击<code>ctrl + w</code>进行轮流切换，也可以通过<code>ctrl + w + 方向键（或者hjkl）</code>来切换到指定的窗口。</p>
+<h3 id="tab">Tab</h3>
+<p>当你需要打开多个文件，而当前<code>tab</code>又没有多余空间使用是，你可以创建一个新的<code>tab</code>。
+<code>tab</code>会以数字下标排序，显示在顶部，像下面这样,</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="images/img00.png"
+        data-srcset="/posts/vim-usage/images/img00.png, images/img00.png 1.5x, /posts/vim-usage/images/img00.png 2x"
+        data-sizes="auto"
+        alt="/posts/vim-usage/images/img00.png"
+        title="figure00" /></p>
+<p>常用的操控<code>tab</code>的命令如下，</p>
+<ul>
+<li>创建一个新的<code>tab</code>：<code>:tabnew</code></li>
+<li>在<code>tab</code>间进行切换：<code>gt</code></li>
+<li>切换至下一个<code>tab</code>：<code>:tabnext</code></li>
+<li>切换至上一个<code>tab</code>：<code>:tabprevious</code></li>
+<li>切换至第一个<code>tab</code>：<code>:tabfirst</code></li>
+<li>切换至最后一个<code>tab</code>：<code>:tablast</code></li>
+<li>将当前<code>tab</code>移动到某个<code>index</code>：<code>:tabmove number</code>，<code>number</code>从0开始</li>
+</ul>
+<h2 id="拓展工具">拓展工具</h2>
+<p>推荐使用<a href="https://github.com/amix/vimrc" target="_blank" rel="noopener noreffer">vimrc</a>。
+<code>vimrc</code>是<code>vim</code>的一款配置工具，安装后会自动帮你配置<code>vim</code>的样式，字体和各类插件。</p>
+<p><code>vimrc</code>的安装方法，见项目<code>README</code>。</p>
+<h3 id="插件">插件</h3>
+<p><code>vimrc</code>帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。</p>
+<h3 id="nerdtree">NERDtree</h3>
+<p><code>NERD Tree</code>可以让我们在<code>vim</code>中便捷的访问目录结构，在<code>NOMAL</code>模式下，输入<code>:NERDTree</code>后，会在右侧显示一个<code>explorer</code>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="images/img01.gif"
+        data-srcset="/posts/vim-usage/images/img01.gif, images/img01.gif 1.5x, /posts/vim-usage/images/img01.gif 2x"
+        data-sizes="auto"
+        alt="/posts/vim-usage/images/img01.gif"
+        title="figure01" /></p>
+<p>常用的快捷键如下（需要先切换至<code>NERDTree</code>打开的窗口）：</p>
+<ul>
+<li>刷新当前根目录：<code>O</code>，输入<code>shift + o</code>即可;</li>
+<li>刷新当前光标所指的目录：<code>o</code>；</li>
+<li>在新的<code>tab</code>中打开当前文件或目录：<code>t</code>；</li>
+<li>在新的<code>tab</code>中打开当前文件或目录，但不切换过去：<code>T</code>；</li>
+<li>显示隐藏文件<code>I</code></li>
+</ul>
+<p>如果你想让<code>NERD Tree</code>始终显示隐藏文件，你可以修改<code>.vimrc</code>文件，并在末尾加上如下内容，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-vimrc" data-lang="vimrc"><span class="k">let</span> <span class="nx">NERDTreeShowHidden</span><span class="p">=</span><span class="m">1</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ol>
+<li>Resize split more quickly: <a href="https://vim.fandom.com/wiki/Resize_splits_more_quickly">https://vim.fandom.com/wiki/Resize_splits_more_quickly</a></li>
+<li>Vimrc included plugins: <a href="https://github.com/amix/vimrc#included-plugins">https://github.com/amix/vimrc#included-plugins</a></li>
+<li>NERD Tree: <a href="https://github.com/preservim/nerdtree">https://github.com/preservim/nerdtree</a></li>
+<li>Vim tips using tab: <a href="https://www.linux.com/training-tutorials/vim-tips-using-tabs">https://www.linux.com/training-tutorials/vim-tips-using-tabs</a></li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
