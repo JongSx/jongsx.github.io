@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/home/travis/gopath/src/github.com/JongSx/trganda",
+	"sourceRoot": "/home/travis/gopath/src/github.com/trganda/trganda.site",
 	"sources": [
 		"themes/LoveIt/assets/css/style.scss",
 		"themes/LoveIt/assets/css/_variables.scss",
