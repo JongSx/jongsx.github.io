@@ -12,20 +12,18 @@
     <author>作者</author>
     <guid>http://example.org/posts/vim-usage/</guid>
     <description><![CDATA[介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
-常用命令 下面列出我常用到的命令和其作用。
-分屏  垂直分屏：:vsplit； 水平分屏：:split；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
+ 下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
+ 常用命令 下面列出我常用到的命令和其作用。
+分屏  垂直分屏：:vsplit； 水平分屏：:split；  你可以用快捷键的方式，打开一个垂直或者水平分配的窗口。
+ 垂直分屏：ctrl+w, v； 水平分屏：ctrl+w, s；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
  调整高度：:resize number； 调整宽度：:vertical resize number；  也可以用递增或递减的方式来调整，
- 增加高度：:resize +number； 减少高度：:resize -number；  切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
+ 增加高度：:resize +number； 减少高度：:resize -number；  如果你觉得这样很麻烦，可以使用快捷键，
+ 增加宽度：ctrl+w, &gt;； 增加高度：ctrl+w, +； 减少宽度：ctrl+w, &lt;； 减少高度：ctrl+w, -；  需要重置分屏窗口的大小时，使用ctrl+w, =。
+切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
 可以双击ctrl + w进行轮流切换，也可以通过ctrl + w + 方向键（或者hjkl）来切换到指定的窗口。
 Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是，你可以创建一个新的tab。 tab会以数字下标排序，显示在顶部，像下面这样,
 常用的操控tab的命令如下，
- 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。
-vimrc的安装方法，见项目README。
-插件 vimrc帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。
-NERDtree NERD Tree可以让我们在vim中便捷的访问目录结构，在NOMAL模式下，输入:NERDTree后，会在右侧显示一个explorer。
-常用的快捷键如下（需要先切换至NERDTree打开的窗口）：
- 刷新当前根目录：O，输入shift + o即可; 刷新当前光标所指的目录：o； 在新的tab中打开当前文件或目录：t； 在新的tab中打开当前文件或目录，但不切换过去：T； 显示隐藏文件I  如果你想让NERD Tree始终显示隐藏文件，你可以修改.vimrc文件，并在末尾加上如下内容，
-1  let NERDTreeShowHidden=1  参考  Resize split more quickly: https://vim.]]></description>
+ 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。]]></description>
 </item><item>
     <title>Hugo 构建Github Pages</title>
     <link>http://example.org/posts/build-website-with-hugo/</link>
