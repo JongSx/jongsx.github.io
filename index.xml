@@ -19,7 +19,7 @@
     <pubDate>Tue, 20 Oct 2020 22:41:39 &#43;0800</pubDate>
     <author>作者</author>
     <guid>http://example.org/posts/vim-usage/</guid>
-    <description><![CDATA[介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
+    <description><![CDATA[介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。 如果你是第一次接触vim，并想要学习如何使用它，那这个网站Interactive Vim Tutorial会是个不错的选择，你可以使用交互式的方式学习如何使用vim。
  下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
  常用命令 下面列出我常用到的命令和其作用。
 分屏  垂直分屏：:vsplit； 水平分屏：:split；  你可以用快捷键的方式，打开一个垂直或者水平分配的窗口。

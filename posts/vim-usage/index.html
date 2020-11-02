@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Vim Usage - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="Vim Usage" />
-<meta property="og:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
+<meta property="og:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。 如果你是第一次接触vim，并想要学习如何使用它，那这个网站Interactive Vim Tutorial会是个不错的选择，你可以使用交互式的方式学习如何使用vim。
  下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
  常用命令 下面列出我常用到的命令和其作用。
 分屏  垂直分屏：:vsplit； 水平分屏：:split；  你可以用快捷键的方式，打开一个垂直或者水平分配的窗口。
@@ -25,7 +25,7 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
 <meta property="article:modified_time" content="2020-10-20T22:41:39+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Vim Usage"/>
-<meta name="twitter:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。
+<meta name="twitter:description" content="介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。 如果你是第一次接触vim，并想要学习如何使用它，那这个网站Interactive Vim Tutorial会是个不错的选择，你可以使用交互式的方式学习如何使用vim。
  下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
  常用命令 下面列出我常用到的命令和其作用。
 分屏  垂直分屏：:vsplit； 水平分屏：:split；  你可以用快捷键的方式，打开一个垂直或者水平分配的窗口。
@@ -50,7 +50,7 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/posts\/vim-usage\/"
-        },"genre": "posts","wordcount":  98 ,
+        },"genre": "posts","wordcount":  107 ,
         "url": "http:\/\/example.org\/posts\/vim-usage\/","datePublished": "2020-10-20T22:41:39+08:00","dateModified": "2020-10-20T22:41:39+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
@@ -127,7 +127,7 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Vim Usage</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-20">2020-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 98 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-20">2020-10-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 107 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -155,7 +155,8 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="介绍">介绍</h2>
-<p>以下记录使用<code>vim</code>的过程中学习到的东西（快捷键，插件，遇到的问题等）。</p>
+<p>以下记录使用<code>vim</code>的过程中学习到的东西（快捷键，插件，遇到的问题等）。
+如果你是第一次接触<code>vim</code>，并想要学习如何使用它，那这个网站<a href="https://www.openvim.com/" target="_blank" rel="noopener noreffer">Interactive Vim Tutorial</a>会是个不错的选择，你可以使用交互式的方式学习如何使用<code>vim</code>。</p>
 <blockquote>
 <p>下面提及的，形如<code>a, b</code>的快捷键，是指先按下a，再按下b。</p>
 </blockquote>
@@ -219,7 +220,7 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
 <code>vimrc</code>是<code>vim</code>的一款配置工具，安装后会自动帮你配置<code>vim</code>的样式，字体和各类插件。</p>
 <p><code>vimrc</code>的安装方法，见项目<code>README</code>。</p>
 <h3 id="插件">插件</h3>
-<p><code>vimrc</code>帮我们集成了很多实用的插件[2]。这里列出我常用的，以及它们的使用方法。</p>
+<p><code>vimrc</code>帮我们集成了很多实用的插件<a href="#ref2" rel="">[2]</a>。这里列出我常用的，以及它们的使用方法。</p>
 <h3 id="nerdtree">NERDtree</h3>
 <p><code>NERD Tree</code>可以让我们在<code>vim</code>中便捷的访问目录结构，在<code>NOMAL</code>模式下，输入<code>:NERDTree</code>后，会在右侧显示一个<code>explorer</code>。</p>
 <p><img
@@ -247,12 +248,16 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
 <pre class="chroma"><code class="language-vimrc" data-lang="vimrc"><span class="k">let</span> <span class="nx">NERDTreeShowHidden</span><span class="p">=</span><span class="m">1</span><span class="err">
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="参考">参考</h2>
+</div><p>如果你想使用<code>vim</code>来进行代码的编写，毫无疑问你需要一个具有代码补全功能的插件。</p>
+<p><code>vim</code>下的代码补全插件中比较优秀的有两个，一个是<code>YouCompleteMe</code><a href="#ref5" rel="">[5]</a>，另一个是<code>coc.nvim</code><a href="#ref6" rel="">[6]</a>。当然它们能够实现的功能远不止代码补全这么简单，个人使用的是后者，因为它可拓展，而且功能丰富。</p>
+<h2 id="参考">参考</h2>
 <ol>
-<li>Resize split more quickly: <a href="https://vim.fandom.com/wiki/Resize_splits_more_quickly">https://vim.fandom.com/wiki/Resize_splits_more_quickly</a></li>
-<li>Vimrc included plugins: <a href="https://github.com/amix/vimrc#included-plugins">https://github.com/amix/vimrc#included-plugins</a></li>
-<li>NERD Tree: <a href="https://github.com/preservim/nerdtree">https://github.com/preservim/nerdtree</a></li>
-<li>Vim tips using tab: <a href="https://www.linux.com/training-tutorials/vim-tips-using-tabs">https://www.linux.com/training-tutorials/vim-tips-using-tabs</a></li>
+<li>Resize split more quickly: <a id="ref1"><a href="https://vim.fandom.com/wiki/Resize_splits_more_quickly">https://vim.fandom.com/wiki/Resize_splits_more_quickly</a></a></li>
+<li>Vimrc included plugins: <a id="ref2"><a href="https://github.com/amix/vimrc#included-plugins">https://github.com/amix/vimrc#included-plugins</a></a></li>
+<li>NERD Tree: <a id="ref3"><a href="https://github.com/preservim/nerdtree">https://github.com/preservim/nerdtree</a></a></li>
+<li>Vim tips using tab: <a id="ref4"><a href="https://www.linux.com/training-tutorials/vim-tips-using-tabs">https://www.linux.com/training-tutorials/vim-tips-using-tabs</a></a></li>
+<li>YouCompleteMe： <a id="ref5"><a href="https://github.com/ycm-core/YouCompleteMe">https://github.com/ycm-core/YouCompleteMe</a></a></li>
+<li>coc.nvim： <a id="ref6"><a href="https://github.com/neoclide/coc.nvim/tree/release">https://github.com/neoclide/coc.nvim/tree/release</a></a></li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
