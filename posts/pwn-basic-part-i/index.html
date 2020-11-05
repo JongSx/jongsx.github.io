@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>PWN Basic Part I - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="PWN Basic Part I" />
+<meta property="og:description" content="前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
+需要具备的基础知识：
+ C语言 汇编语言  会用到的工具：
+ readelf objdump pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
+x64汇编，参数传递规则 首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。 一般情况下，当函数所需的参数个数小于6个时，通过
+ rdi, rsi, rdx, rcx, r8, r9  来传递参数。
+若为系统调用，通过
+ rdi, rsi, rdx, r10, r8, r9  来传递参数。
+当参数超过6个时，通过栈来传递。返回值则通过rax返回。
+至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。
+Example 有一个add函数，调用形式如下：
+1  add(1, 2, 3, 4, 5, 6, 7)   对应的汇编代码，可能如下：
+1 2 3 4 5 6 7 8  401150:	6a 07 push 0x7 401152:	41 b9 06 00 00 00 mov r9d,0x6 401158:	41 b8 05 00 00 00 mov r8d,0x5 40115e:	b9 04 00 00 00 mov ecx,0x4 401163:	ba 03 00 00 00 mov edx,0x3 401168:	be 02 00 00 00 mov esi,0x2 40116d:	bf 01 00 00 00 mov edi,0x1 401172:	e8 8f ff ff ff call 401106 &lt;add&gt;   其中r9d, r8d, ecx, edx, esi, edi是指r9, r8, rcx, rdx, rsi, rdi的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/posts/pwn-basic-part-i/" />
+<meta property="article:published_time" content="2020-11-04T15:55:34+08:00" />
+<meta property="article:modified_time" content="2020-11-04T15:55:34+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PWN Basic Part I"/>
+<meta name="twitter:description" content="前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
+需要具备的基础知识：
+ C语言 汇编语言  会用到的工具：
+ readelf objdump pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
+x64汇编，参数传递规则 首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。 一般情况下，当函数所需的参数个数小于6个时，通过
+ rdi, rsi, rdx, rcx, r8, r9  来传递参数。
+若为系统调用，通过
+ rdi, rsi, rdx, r10, r8, r9  来传递参数。
+当参数超过6个时，通过栈来传递。返回值则通过rax返回。
+至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。
+Example 有一个add函数，调用形式如下：
+1  add(1, 2, 3, 4, 5, 6, 7)   对应的汇编代码，可能如下：
+1 2 3 4 5 6 7 8  401150:	6a 07 push 0x7 401152:	41 b9 06 00 00 00 mov r9d,0x6 401158:	41 b8 05 00 00 00 mov r8d,0x5 40115e:	b9 04 00 00 00 mov ecx,0x4 401163:	ba 03 00 00 00 mov edx,0x3 401168:	be 02 00 00 00 mov esi,0x2 40116d:	bf 01 00 00 00 mov edi,0x1 401172:	e8 8f ff ff ff call 401106 &lt;add&gt;   其中r9d, r8d, ecx, edx, esi, edi是指r9, r8, rcx, rdx, rsi, rdi的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。"/>
+<meta name="application-name" content="Trganda&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Trganda&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/posts/pwn-basic-part-i/" /><link rel="prev" href="http://example.org/posts/manjaro-setup/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "PWN Basic Part I",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/posts\/pwn-basic-part-i\/"
+        },"genre": "posts","wordcount":  590 ,
+        "url": "http:\/\/example.org\/posts\/pwn-basic-part-i\/","datePublished": "2020-11-04T15:55:34+08:00","dateModified": "2020-11-04T15:55:34+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Trganda"},"author": {
+                "@type": "Person",
+                "name": "Trganda"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="" header-mobile=""><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Trganda&#39;s Blog">Trganda&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/dailies/"> 日常 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Trganda&#39;s Blog">Trganda&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/dailies/" title="">日常</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">PWN Basic Part I</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-04">2020-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 590 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#x64汇编参数传递规则">x64汇编，参数传递规则</a>
+      <ul>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#stack-frame">Stack Frame</a>
+      <ul>
+        <li><a href="#function-prologue">Function Prologue</a></li>
+        <li><a href="#function-epilogue">Function Epilogue</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="前言">前言</h2>
+<p>以下内容记录我学习<code>pwn</code>的过程，通过<code>NTUSTISC</code>的教学视频<a href="#%e5%8f%82%e8%80%83" rel="">[1]</a>来学习<code>pwn</code>基础知识，后续会分为几个部分一直写下去。</p>
+<p>需要具备的基础知识：</p>
+<ul>
+<li>C语言</li>
+<li>汇编语言</li>
+</ul>
+<p>会用到的工具：</p>
+<ul>
+<li><a href="https://man7.org/linux/man-pages/man1/readelf.1.html" target="_blank" rel="noopener noreffer">readelf</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Objdump" target="_blank" rel="noopener noreffer">objdump</a></li>
+<li><a href="https://github.com/Gallopsled/pwntools" target="_blank" rel="noopener noreffer">pwntools</a></li>
+</ul>
+<p>如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。</p>
+<h2 id="x64汇编参数传递规则">x64汇编，参数传递规则</h2>
+<p>首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。
+一般情况下，当函数所需的参数个数小于<strong>6</strong>个时，通过</p>
+<ul>
+<li><code>rdi, rsi, rdx, rcx, r8, r9</code></li>
+</ul>
+<p>来传递参数。</p>
+<p>若为系统调用，通过</p>
+<ul>
+<li><code>rdi, rsi, rdx, r10, r8, r9</code></li>
+</ul>
+<p>来传递参数。</p>
+<p>当参数超过<strong>6</strong>个时，通过栈来传递。返回值则通过<code>rax</code>返回。</p>
+<p>至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。</p>
+<h3 id="example">Example</h3>
+<p>有一个<code>add</code>函数，调用形式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>对应的汇编代码，可能如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">401150:	6a 07                	push   0x7
+401152:	41 b9 06 00 00 00    	mov    r9d,0x6
+401158:	41 b8 05 00 00 00    	mov    r8d,0x5
+40115e:	b9 04 00 00 00       	mov    ecx,0x4
+401163:	ba 03 00 00 00       	mov    edx,0x3
+401168:	be 02 00 00 00       	mov    esi,0x2
+40116d:	bf 01 00 00 00       	mov    edi,0x1
+401172:	e8 8f ff ff ff       	call   401106 &lt;add&gt;
+</code></pre></td></tr></table>
+</div>
+</div><p>其中<code>r9d, r8d, ecx, edx, esi, edi</code>是指<code>r9, r8, rcx, rdx, rsi, rdi</code>的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。</p>
+<h2 id="stack-frame">Stack Frame</h2>
+<p>什么是<code>stack frame</code>？这里先不解释，看完后面的内容自然就清楚了。</p>
+<h3 id="function-prologue">Function Prologue</h3>
+<blockquote>
+<p>Prologue，本意是指序幕或者戏剧节目中的开场白。
+那Function Prologue的意思可以理解为，在开始执行一个函数需要进行的一些准备工作。</p>
+</blockquote>
+<p>以汇编语言的视角来看函数的调用（通过<code>call</code>指令），在执行函数的代码之前，需要完成一些准备工作。譬如：保存返回地址
+（<code>call</code>的下一条指令的地址）、创建新的<code>stack frame</code>和传递参数（通过寄存器或栈）。</p>
+<p>下面来看一般情况下，上述步骤是怎么实现的。假设当前栈、指令和寄存器的状态如下，程序将会从<code>main</code>函数跳转到<code>addtwo</code>函数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
+RBP: 0x7fffffffdda0
+RSP: 0x7fffffffdd90
+RIP: 0x401141
+[---------------------------------code---------------------------------]
+   0x401106 &lt;addtwo&gt;:	push   rbp
+   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
+   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
+   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
+   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
+   ...
+=&gt; 0x401141 &lt;main+39&gt;:	call   0x401106
+[--------------------------------stack---------------------------------]
+0000| 0x7fffffffdd90 --&gt; 0x7fffffffdea8 &lt;-- RSP
+0008| 0x7fffffffdd98 --&gt; 0x100401020
+0016| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
+[----------------------------------------------------------------------]
+</code></pre></td></tr></table>
+</div>
+</div><p>现在停在了<code>call 0x401106</code>，<code>call</code>指令执行后，会先将其下一条指令的地址让如当前栈中，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
+RBP: 0x7fffffffdda0
+RSP: 0x7fffffffdd88
+RIP: 0x401106
+[---------------------------------code---------------------------------]
+=&gt; 0x401106 &lt;addtwo&gt;:	push   rbp
+   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
+   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
+   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
+   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
+   ...
+   0x401141 &lt;main+39&gt;:	call   0x401106
+[--------------------------------stack---------------------------------]
+0000| 0x7fffffffdd88 --&gt; 0x401146       &lt;-- RSP
+0008| 0x7fffffffdd90 --&gt; 0x7fffffffdea8
+0016| 0x7fffffffdd98 --&gt; 0x100401020
+0024| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
+[----------------------------------------------------------------------]
+</code></pre></td></tr></table>
+</div>
+</div><p>目前为止，一个新的<code>stack frame</code>开始创建了，它归属与被调用者<code>addtwo</code>。</p>
+<p>进入<code>addtwo</code>函数后，前两行汇编指令的作用是保存之前的栈基址，并开启一个新的<code>stack frame</code>。</p>
+<p>紧跟之后的两行是分配局部变量的空间，各占了4个字节。
+<code>edi</code>和<code>esi</code>是传递给<code>addtwo</code>函数的两个参数（通过寄存器）。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
+RBP: 0x7fffffffdd80
+RSP: 0x7fffffffdd80
+RIP: 0x401116
+[---------------------------------code---------------------------------]
+   0x401106 &lt;addtwo&gt;:   push   rbp
+   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
+   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
+   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
+   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
+   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
+=&gt; 0x401116 &lt;addtwo+16&gt;:	add    eax,edx
+   ...
+   0x401141 &lt;main+39&gt;:	call   0x401106
+[--------------------------------stack---------------------------------]
+0000| 0x7fffffffdd80 --&gt; 0x7fffffffddb0 &lt;-- RBP, RSP
+0008| 0x7fffffffdd88 --&gt; 0x401146 
+[----------------------------------------------------------------------]
+</code></pre></td></tr></table>
+</div>
+</div><p>到这里<code>Function Prologue</code>的过程就结束了。</p>
+<h3 id="function-epilogue">Function Epilogue</h3>
+<p>了解过前面的内容，一定能够猜到<code>Function Epilogue</code>的意思。即，当函数准备返回时，需要进行的清理和复原工作，
+如：恢复<code>stack frame</code>和下一条指令的执行地址。</p>
+<p>继续前面的例子，当将要开始进行<code>Epilogue</code>时，内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
+RBP: 0x7fffffffdd80
+RSP: 0x7fffffffdd80
+RIP: 0x401118
+[---------------------------------code---------------------------------]
+   0x401106 &lt;addtwo&gt;:   push   rbp
+   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
+   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
+   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
+   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
+   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
+   0x401116 &lt;addtwo+16&gt;:	add    eax,edx
+=&gt; 0x401118 &lt;addtwo+18&gt;:	pop    rbp
+   0x401119 &lt;addtwo+19&gt;:	ret
+   ...
+   0x401141 &lt;main+39&gt;:	call   0x401106
+[--------------------------------stack---------------------------------]
+0000| 0x7fffffffdd80 --&gt; 0x7fffffffddb0 &lt;-- RBP, RSP
+0008| 0x7fffffffdd88 --&gt; 0x401146 
+[----------------------------------------------------------------------]
+</code></pre></td></tr></table>
+</div>
+</div><p><code>Function Epilogue</code>需要做两件事情，恢复寄存器<code>RBP</code>和<code>RSP</code>（这里的示例没有恢复<code>RSP</code>的内容，但过程基本一致）
+并将返回地址传递给<code>RIP</code>（通过<code>ret</code>）。</p>
+<p>所以执行玩这两条汇编指令后，结果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
+RBP: 0x7fffffffddb0
+RSP: 0x7fffffffdd90
+RIP: 0x401138
+[---------------------------------code---------------------------------]
+   0x401106 &lt;addtwo&gt;:   push   rbp
+   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
+   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
+   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
+   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
+   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
+   0x401116 &lt;addtwo+16&gt;:	add    eax,edx
+   0x401118 &lt;addtwo+18&gt;:	pop    rbp
+   0x401119 &lt;addtwo+19&gt;:	ret
+   ...
+   0x401141 &lt;main+39&gt;:	call   0x401106
+=&gt; 0x401138 &lt;main+3E&gt;:  mov    DWORD PTR [rbp-0x4],eax
+[--------------------------------stack---------------------------------]
+0000| 0x7fffffffdd90 --&gt; 0x7fffffffdea8 &lt;-- RSP
+0008| 0x7fffffffdd98 --&gt; 0x100401020
+0016| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
+[----------------------------------------------------------------------]
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ol>
+<li>NTUSTISC: <a href="https://www.youtube.com/channel/UC4-PD2BdlYWd807BhJZkjIg/featured">https://www.youtube.com/channel/UC4-PD2BdlYWd807BhJZkjIg/featured</a></li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2020-11-04</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/manjaro-setup/" class="prev" rel="prev" title="Manjaro Setup"><i class="fas fa-angle-left fa-fw"></i>Manjaro Setup</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Trganda</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.stemmer.support.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.zh.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
