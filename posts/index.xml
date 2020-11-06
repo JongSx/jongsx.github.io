@@ -12,16 +12,9 @@
     <description><![CDATA[前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
 需要具备的基础知识：
  C语言 汇编语言  会用到的工具：
- readelf objdump pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
-x64汇编，参数传递规则 首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。 一般情况下，当函数所需的参数个数小于6个时，通过
- rdi, rsi, rdx, rcx, r8, r9  来传递参数。
-若为系统调用，通过
- rdi, rsi, rdx, r10, r8, r9  来传递参数。
-当参数超过6个时，通过栈来传递。返回值则通过rax返回。
-至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。
-Example 有一个add函数，调用形式如下：
-1  add(1, 2, 3, 4, 5, 6, 7)   对应的汇编代码，可能如下：
-1 2 3 4 5 6 7 8  401150:	6a 07 push 0x7 401152:	41 b9 06 00 00 00 mov r9d,0x6 401158:	41 b8 05 00 00 00 mov r8d,0x5 40115e:	b9 04 00 00 00 mov ecx,0x4 401163:	ba 03 00 00 00 mov edx,0x3 401168:	be 02 00 00 00 mov esi,0x2 40116d:	bf 01 00 00 00 mov edi,0x1 401172:	e8 8f ff ff ff call 401106 &lt;add&gt;   其中r9d, r8d, ecx, edx, esi, edi是指r9, r8, rcx, rdx, rsi, rdi的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。]]></description>
+ readelf objdump PEDA pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
+Pwntools，使用示例 使用python 3.x。
+常用的函数    函数 功能     p64(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo;   u64(str) b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo; =&gt; 4207849484   p32(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa&rsquo;   u32(str) b&rsquo;\x0c\xb0\xce\xfa&rsquo; =&gt; 4207849484   remote(host, port) / process(path) 与本地或远程的程序建立连接   .recv(int) 接收指定数量的字符   .recvuntil(str) 接收指定字符串以及它前面的内容   .recvline() 与.recvuntil('\n&rsquo;)作用一样   .]]></description>
 </item><item>
     <title>Manjaro Setup</title>
     <link>http://example.org/posts/manjaro-setup/</link>

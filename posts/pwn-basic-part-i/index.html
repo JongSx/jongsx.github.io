@@ -9,16 +9,9 @@
 <meta property="og:description" content="前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
 需要具备的基础知识：
  C语言 汇编语言  会用到的工具：
- readelf objdump pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
-x64汇编，参数传递规则 首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。 一般情况下，当函数所需的参数个数小于6个时，通过
- rdi, rsi, rdx, rcx, r8, r9  来传递参数。
-若为系统调用，通过
- rdi, rsi, rdx, r10, r8, r9  来传递参数。
-当参数超过6个时，通过栈来传递。返回值则通过rax返回。
-至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。
-Example 有一个add函数，调用形式如下：
-1  add(1, 2, 3, 4, 5, 6, 7)   对应的汇编代码，可能如下：
-1 2 3 4 5 6 7 8  401150:	6a 07 push 0x7 401152:	41 b9 06 00 00 00 mov r9d,0x6 401158:	41 b8 05 00 00 00 mov r8d,0x5 40115e:	b9 04 00 00 00 mov ecx,0x4 401163:	ba 03 00 00 00 mov edx,0x3 401168:	be 02 00 00 00 mov esi,0x2 40116d:	bf 01 00 00 00 mov edi,0x1 401172:	e8 8f ff ff ff call 401106 &lt;add&gt;   其中r9d, r8d, ecx, edx, esi, edi是指r9, r8, rcx, rdx, rsi, rdi的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。" />
+ readelf objdump PEDA pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
+Pwntools，使用示例 使用python 3.x。
+常用的函数    函数 功能     p64(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo;   u64(str) b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo; =&gt; 4207849484   p32(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa&rsquo;   u32(str) b&rsquo;\x0c\xb0\xce\xfa&rsquo; =&gt; 4207849484   remote(host, port) / process(path) 与本地或远程的程序建立连接   .recv(int) 接收指定数量的字符   .recvuntil(str) 接收指定字符串以及它前面的内容   .recvline() 与.recvuntil(&#39;\n&rsquo;)作用一样   ." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://example.org/posts/pwn-basic-part-i/" />
 <meta property="article:published_time" content="2020-11-04T15:55:34+08:00" />
@@ -28,16 +21,9 @@ Example 有一个add函数，调用形式如下：
 <meta name="twitter:description" content="前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
 需要具备的基础知识：
  C语言 汇编语言  会用到的工具：
- readelf objdump pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
-x64汇编，参数传递规则 首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。 一般情况下，当函数所需的参数个数小于6个时，通过
- rdi, rsi, rdx, rcx, r8, r9  来传递参数。
-若为系统调用，通过
- rdi, rsi, rdx, r10, r8, r9  来传递参数。
-当参数超过6个时，通过栈来传递。返回值则通过rax返回。
-至于参数的传递顺序，从左往右或从右往左，不同的调用标准会有一些差异。
-Example 有一个add函数，调用形式如下：
-1  add(1, 2, 3, 4, 5, 6, 7)   对应的汇编代码，可能如下：
-1 2 3 4 5 6 7 8  401150:	6a 07 push 0x7 401152:	41 b9 06 00 00 00 mov r9d,0x6 401158:	41 b8 05 00 00 00 mov r8d,0x5 40115e:	b9 04 00 00 00 mov ecx,0x4 401163:	ba 03 00 00 00 mov edx,0x3 401168:	be 02 00 00 00 mov esi,0x2 40116d:	bf 01 00 00 00 mov edi,0x1 401172:	e8 8f ff ff ff call 401106 &lt;add&gt;   其中r9d, r8d, ecx, edx, esi, edi是指r9, r8, rcx, rdx, rsi, rdi的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。"/>
+ readelf objdump PEDA pwntools  如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。
+Pwntools，使用示例 使用python 3.x。
+常用的函数    函数 功能     p64(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo;   u64(str) b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo; =&gt; 4207849484   p32(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa&rsquo;   u32(str) b&rsquo;\x0c\xb0\xce\xfa&rsquo; =&gt; 4207849484   remote(host, port) / process(path) 与本地或远程的程序建立连接   .recv(int) 接收指定数量的字符   .recvuntil(str) 接收指定字符串以及它前面的内容   .recvline() 与.recvuntil(&#39;\n&rsquo;)作用一样   ."/>
 <meta name="application-name" content="Trganda&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Trganda&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -50,7 +36,7 @@ Example 有一个add函数，调用形式如下：
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/posts\/pwn-basic-part-i\/"
-        },"genre": "posts","wordcount":  590 ,
+        },"genre": "posts","wordcount":  982 ,
         "url": "http:\/\/example.org\/posts\/pwn-basic-part-i\/","datePublished": "2020-11-04T15:55:34+08:00","dateModified": "2020-11-04T15:55:34+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
@@ -127,8 +113,8 @@ Example 有一个add函数，调用形式如下：
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">PWN Basic Part I</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-04">2020-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 590 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-04">2020-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 982 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -137,6 +123,11 @@ Example 有一个add函数，调用形式如下：
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
+    <li><a href="#pwntools使用示例">Pwntools，使用示例</a>
+      <ul>
+        <li><a href="#常用的函数">常用的函数</a></li>
+      </ul>
+    </li>
     <li><a href="#x64汇编参数传递规则">x64汇编，参数传递规则</a>
       <ul>
         <li><a href="#example">Example</a></li>
@@ -162,10 +153,285 @@ Example 有一个add函数，调用形式如下：
 <ul>
 <li><a href="https://man7.org/linux/man-pages/man1/readelf.1.html" target="_blank" rel="noopener noreffer">readelf</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Objdump" target="_blank" rel="noopener noreffer">objdump</a></li>
+<li><a href="https://github.com/longld/peda" target="_blank" rel="noopener noreffer">PEDA</a></li>
 <li><a href="https://github.com/Gallopsled/pwntools" target="_blank" rel="noopener noreffer">pwntools</a></li>
 </ul>
 <p>如果你看过《程序员的自我修养——链接、装载与库》，应该对前两个工具不会感到陌生。即便真的没有接触过也没关系，照葫芦画瓢也是可以的。</p>
-<h2 id="x64汇编参数传递规则">x64汇编，参数传递规则</h2>
+<h2 id="pwntools使用示例">Pwntools，使用示例</h2>
+<p>使用<code>python 3.x</code>。</p>
+<h3 id="常用的函数">常用的函数</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p64(int)</td>
+<td>0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo;</td>
+</tr>
+<tr>
+<td>u64(str)</td>
+<td>b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo; =&gt; 4207849484</td>
+</tr>
+<tr>
+<td>p32(int)</td>
+<td>0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa&rsquo;</td>
+</tr>
+<tr>
+<td>u32(str)</td>
+<td>b&rsquo;\x0c\xb0\xce\xfa&rsquo; =&gt; 4207849484</td>
+</tr>
+<tr>
+<td>remote(host, port) / process(path)</td>
+<td>与本地或远程的程序建立连接</td>
+</tr>
+<tr>
+<td>.recv(int)</td>
+<td>接收指定数量的字符</td>
+</tr>
+<tr>
+<td>.recvuntil(str)</td>
+<td>接收指定字符串以及它前面的内容</td>
+</tr>
+<tr>
+<td>.recvline()</td>
+<td>与.recvuntil('\n&rsquo;)作用一样</td>
+</tr>
+<tr>
+<td>.send(str)</td>
+<td>将指定字符串作为程序的输入</td>
+</tr>
+<tr>
+<td>.sendline(str)</td>
+<td>在指定字符串后加上&rsquo;\n'并作为程序的输入</td>
+</tr>
+<tr>
+<td>.interactive()</td>
+<td>开启交互模式</td>
+</tr>
+</tbody>
+</table>
+<p>这里需要注意，用于接收的函数，返回值是<code>byte []</code>类型的。</p>
+<p>下面用<code>pwntools</code>来做一个小练习，下面这段代码的目的是要求在90秒内完成1000到数学题目，很明显靠手工交互的模式，几乎是不可能做到的。
+但是通过<code>pwntools</code>编写自动化脚本来完成它，却是很简单的一件事情。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;time.h&gt;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">handler</span><span class="p">(</span><span class="kt">int</span> <span class="n">signum</span><span class="p">){</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">&#34;Timeout&#34;</span><span class="p">);</span>
+  <span class="n">_exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">setvbuf</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">setvbuf</span><span class="p">(</span><span class="n">stdin</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">signal</span><span class="p">(</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">handler</span><span class="p">);</span>
+  <span class="n">alarm</span><span class="p">(</span><span class="mi">90</span><span class="p">);</span>
+
+  <span class="kt">unsigned</span> <span class="n">seed</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span><span class="p">)</span><span class="n">time</span><span class="p">(</span><span class="nb">NULL</span><span class="p">);</span>
+  <span class="n">srand</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
+
+  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">magic</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Give me the magic number :)</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">magic</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">magic</span> <span class="o">!=</span> <span class="mi">3735928559</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Bye~</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Complete 1000 math questions in 90 seconds!!!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">%</span> <span class="mi">65535</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">%</span> <span class="mi">65535</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">%</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="k">switch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d + %d = ?&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ans</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ans</span> <span class="o">!=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Bye Bye~</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+          <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d - %d = ?&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ans</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ans</span> <span class="o">!=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Bye Bye~</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+          <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="mi">2</span><span class="o">:</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d * %d = ?&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+        <span class="n">scanf</span><span class="p">(</span><span class="s">&#34;%d&#34;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ans</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">ans</span> <span class="o">!=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Bye Bye~</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+          <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;Good job!</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+  <span class="n">system</span><span class="p">(</span><span class="s">&#34;sh&#34;</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>先分析一下这个程序的功能，它需要我们先输入一个指定的<code>magic number</code>才会进入下一步，接着就是随机生成一道数学题并要我们提供正确答案。把上面的代码保存为<code>pwntools.c</code>并编译，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">gcc pwntools.c -o pwntools
+</code></pre></td></tr></table>
+</div>
+</div><p>解答脚本如下，</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s1">&#39;./pwntools&#39;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0xdeadbeef</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s1">&#39;number :)</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s1">&#39; = ?&#39;</span><span class="p">)</span>
+    <span class="c1"># 返回的是byte []，需要转换为字符串</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; = ?&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;&#39;&#34;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;+&#39;</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="s1">&#39;-&#39;</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+        <span class="n">ans</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34; = {ans}&#34;</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ans</span><span class="p">))</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="x64汇编参数传递规则">x64汇编，参数传递规则</h2>
 <p>首先，要知道函数所需的参数是由调用者提前放入寄存器或栈中的。
 一般情况下，当函数所需的参数个数小于<strong>6</strong>个时，通过</p>
 <ul>
@@ -202,14 +468,14 @@ Example 有一个add函数，调用形式如下：
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">401150:	6a 07                	push   0x7
-401152:	41 b9 06 00 00 00    	mov    r9d,0x6
-401158:	41 b8 05 00 00 00    	mov    r8d,0x5
-40115e:	b9 04 00 00 00       	mov    ecx,0x4
-401163:	ba 03 00 00 00       	mov    edx,0x3
-401168:	be 02 00 00 00       	mov    esi,0x2
-40116d:	bf 01 00 00 00       	mov    edi,0x1
-401172:	e8 8f ff ff ff       	call   401106 &lt;add&gt;
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">401150:</span>	<span class="err">6</span><span class="nf">a</span> <span class="mi">07</span>                	<span class="no">push</span>   <span class="mi">0x7</span>
+<span class="err">401152:</span>	<span class="err">41</span> <span class="nf">b9</span> <span class="mi">06</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>    	<span class="no">mov</span>    <span class="no">r9d</span><span class="p">,</span><span class="mi">0x6</span>
+<span class="err">401158:</span>	<span class="err">41</span> <span class="nf">b8</span> <span class="mi">05</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>    	<span class="no">mov</span>    <span class="no">r8d</span><span class="p">,</span><span class="mi">0x5</span>
+<span class="err">40115</span><span class="nl">e:</span>	<span class="nf">b9</span> <span class="mi">04</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>       	<span class="no">mov</span>    <span class="no">ecx</span><span class="p">,</span><span class="mi">0x4</span>
+<span class="err">401163:</span>	<span class="nf">ba</span> <span class="mi">03</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>       	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="mi">0x3</span>
+<span class="err">401168:</span>	<span class="nf">be</span> <span class="mi">02</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>       	<span class="no">mov</span>    <span class="no">esi</span><span class="p">,</span><span class="mi">0x2</span>
+<span class="err">40116</span><span class="nl">d:</span>	<span class="nf">bf</span> <span class="mi">01</span> <span class="mi">00</span> <span class="mi">00</span> <span class="mi">00</span>       	<span class="no">mov</span>    <span class="no">edi</span><span class="p">,</span><span class="mi">0x1</span>
+<span class="err">401172:</span>	<span class="nf">e8</span> <span class="mi">8</span><span class="no">f</span> <span class="no">ff</span> <span class="no">ff</span> <span class="no">ff</span>       	<span class="no">call</span>   <span class="mh">401106</span> <span class="p">&lt;</span><span class="no">add</span><span class="p">&gt;</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>其中<code>r9d, r8d, ecx, edx, esi, edi</code>是指<code>r9, r8, rcx, rdx, rsi, rdi</code>的低后半部分，因为x64下寄存器的大小为64位，这里只是用了低32位。</p>
@@ -244,23 +510,23 @@ Example 有一个add函数，调用形式如下：
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
-RBP: 0x7fffffffdda0
-RSP: 0x7fffffffdd90
-RIP: 0x401141
-[---------------------------------code---------------------------------]
-   0x401106 &lt;addtwo&gt;:	push   rbp
-   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
-   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
-   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
-   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
-   ...
-=&gt; 0x401141 &lt;main+39&gt;:	call   0x401106
-[--------------------------------stack---------------------------------]
-0000| 0x7fffffffdd90 --&gt; 0x7fffffffdea8 &lt;-- RSP
-0008| 0x7fffffffdd98 --&gt; 0x100401020
-0016| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
-[----------------------------------------------------------------------]
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">[------------------------------</span><span class="nf">registers-------------------------------</span><span class="p">]</span>
+<span class="nl">RBP:</span> <span class="err">0</span><span class="nf">x7fffffffdda0</span>
+<span class="nl">RSP:</span> <span class="err">0</span><span class="nf">x7fffffffdd90</span>
+<span class="nl">RIP:</span> <span class="err">0</span><span class="nf">x401141</span>
+<span class="err">[---------------------------------</span><span class="nf">code---------------------------------</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401106</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">push</span>   <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401107</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">1</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">rbp</span><span class="p">,</span><span class="no">rsp</span>
+   <span class="err">0</span><span class="nf">x40110a</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">4</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">edi</span>
+   <span class="err">0</span><span class="nf">x40110d</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">7</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">],</span><span class="no">esi</span>
+   <span class="err">0</span><span class="nf">x401110</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">10</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">]</span>
+   <span class="na">...</span>
+<span class="err">=&gt;</span> <span class="err">0</span><span class="nf">x401141</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">39</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">call</span>   <span class="mi">0x401106</span>
+<span class="err">[--------------------------------</span><span class="nf">stack---------------------------------</span><span class="p">]</span>
+<span class="err">0000|</span> <span class="err">0</span><span class="nf">x7fffffffdd90</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea8</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RSP</span>
+<span class="err">0008|</span> <span class="err">0</span><span class="nf">x7fffffffdd98</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x100401020</span>
+<span class="err">0016|</span> <span class="err">0</span><span class="nf">x7fffffffdda0</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea0</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RBP</span>
+<span class="err">[----------------------------------------------------------------------]</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>现在停在了<code>call 0x401106</code>，<code>call</code>指令执行后，会先将其下一条指令的地址让如当前栈中，如下：</p>
@@ -286,24 +552,24 @@ RIP: 0x401141
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
-RBP: 0x7fffffffdda0
-RSP: 0x7fffffffdd88
-RIP: 0x401106
-[---------------------------------code---------------------------------]
-=&gt; 0x401106 &lt;addtwo&gt;:	push   rbp
-   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
-   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
-   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
-   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
-   ...
-   0x401141 &lt;main+39&gt;:	call   0x401106
-[--------------------------------stack---------------------------------]
-0000| 0x7fffffffdd88 --&gt; 0x401146       &lt;-- RSP
-0008| 0x7fffffffdd90 --&gt; 0x7fffffffdea8
-0016| 0x7fffffffdd98 --&gt; 0x100401020
-0024| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
-[----------------------------------------------------------------------]
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">[------------------------------</span><span class="nf">registers-------------------------------</span><span class="p">]</span>
+<span class="nl">RBP:</span> <span class="err">0</span><span class="nf">x7fffffffdda0</span>
+<span class="nl">RSP:</span> <span class="err">0</span><span class="nf">x7fffffffdd88</span>
+<span class="nl">RIP:</span> <span class="err">0</span><span class="nf">x401106</span>
+<span class="err">[---------------------------------</span><span class="nf">code---------------------------------</span><span class="p">]</span>
+<span class="err">=&gt;</span> <span class="err">0</span><span class="nf">x401106</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">push</span>   <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401107</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">1</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">rbp</span><span class="p">,</span><span class="no">rsp</span>
+   <span class="err">0</span><span class="nf">x40110a</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">4</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">edi</span>
+   <span class="err">0</span><span class="nf">x40110d</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">7</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">],</span><span class="no">esi</span>
+   <span class="err">0</span><span class="nf">x401110</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">10</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">]</span>
+   <span class="na">...</span>
+   <span class="err">0</span><span class="nf">x401141</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">39</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">call</span>   <span class="mi">0x401106</span>
+<span class="err">[--------------------------------</span><span class="nf">stack---------------------------------</span><span class="p">]</span>
+<span class="err">0000|</span> <span class="err">0</span><span class="nf">x7fffffffdd88</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x401146</span>       <span class="err">&lt;</span><span class="p">--</span> <span class="no">RSP</span>
+<span class="err">0008|</span> <span class="err">0</span><span class="nf">x7fffffffdd90</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea8</span>
+<span class="err">0016|</span> <span class="err">0</span><span class="nf">x7fffffffdd98</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x100401020</span>
+<span class="err">0024|</span> <span class="err">0</span><span class="nf">x7fffffffdda0</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea0</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RBP</span>
+<span class="err">[----------------------------------------------------------------------]</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>目前为止，一个新的<code>stack frame</code>开始创建了，它归属与被调用者<code>addtwo</code>。</p>
@@ -332,24 +598,24 @@ RIP: 0x401106
 </span><span class="lnt">18
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
-RBP: 0x7fffffffdd80
-RSP: 0x7fffffffdd80
-RIP: 0x401116
-[---------------------------------code---------------------------------]
-   0x401106 &lt;addtwo&gt;:   push   rbp
-   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
-   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
-   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
-   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
-   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
-=&gt; 0x401116 &lt;addtwo+16&gt;:	add    eax,edx
-   ...
-   0x401141 &lt;main+39&gt;:	call   0x401106
-[--------------------------------stack---------------------------------]
-0000| 0x7fffffffdd80 --&gt; 0x7fffffffddb0 &lt;-- RBP, RSP
-0008| 0x7fffffffdd88 --&gt; 0x401146 
-[----------------------------------------------------------------------]
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">[------------------------------</span><span class="nf">registers-------------------------------</span><span class="p">]</span>
+<span class="nl">RBP:</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span>
+<span class="nl">RSP:</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span>
+<span class="nl">RIP:</span> <span class="err">0</span><span class="nf">x401116</span>
+<span class="err">[---------------------------------</span><span class="nf">code---------------------------------</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401106</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">&gt;</span><span class="p">:</span>   <span class="no">push</span>   <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401107</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">1</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">rbp</span><span class="p">,</span><span class="no">rsp</span>
+   <span class="err">0</span><span class="nf">x40110a</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">4</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">edi</span>
+   <span class="err">0</span><span class="nf">x40110d</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">7</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">],</span><span class="no">esi</span>
+   <span class="err">0</span><span class="nf">x401110</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">10</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401113</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">13</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">eax</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">]</span>
+<span class="err">=&gt;</span> <span class="err">0</span><span class="nf">x401116</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">16</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">add</span>    <span class="no">eax</span><span class="p">,</span><span class="no">edx</span>
+   <span class="na">...</span>
+   <span class="err">0</span><span class="nf">x401141</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">39</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">call</span>   <span class="mi">0x401106</span>
+<span class="err">[--------------------------------</span><span class="nf">stack---------------------------------</span><span class="p">]</span>
+<span class="err">0000|</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffddb0</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RBP</span><span class="p">,</span> <span class="no">RSP</span>
+<span class="err">0008|</span> <span class="err">0</span><span class="nf">x7fffffffdd88</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x401146</span> 
+<span class="p">[----------------------------------------------------------------------]</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>到这里<code>Function Prologue</code>的过程就结束了。</p>
@@ -381,26 +647,26 @@ RIP: 0x401116
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
-RBP: 0x7fffffffdd80
-RSP: 0x7fffffffdd80
-RIP: 0x401118
-[---------------------------------code---------------------------------]
-   0x401106 &lt;addtwo&gt;:   push   rbp
-   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
-   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
-   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
-   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
-   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
-   0x401116 &lt;addtwo+16&gt;:	add    eax,edx
-=&gt; 0x401118 &lt;addtwo+18&gt;:	pop    rbp
-   0x401119 &lt;addtwo+19&gt;:	ret
-   ...
-   0x401141 &lt;main+39&gt;:	call   0x401106
-[--------------------------------stack---------------------------------]
-0000| 0x7fffffffdd80 --&gt; 0x7fffffffddb0 &lt;-- RBP, RSP
-0008| 0x7fffffffdd88 --&gt; 0x401146 
-[----------------------------------------------------------------------]
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">[------------------------------</span><span class="nf">registers-------------------------------</span><span class="p">]</span>
+<span class="nl">RBP:</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span>
+<span class="nl">RSP:</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span>
+<span class="nl">RIP:</span> <span class="err">0</span><span class="nf">x401118</span>
+<span class="err">[---------------------------------</span><span class="nf">code---------------------------------</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401106</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">&gt;</span><span class="p">:</span>   <span class="no">push</span>   <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401107</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">1</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">rbp</span><span class="p">,</span><span class="no">rsp</span>
+   <span class="err">0</span><span class="nf">x40110a</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">4</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">edi</span>
+   <span class="err">0</span><span class="nf">x40110d</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">7</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">],</span><span class="no">esi</span>
+   <span class="err">0</span><span class="nf">x401110</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">10</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401113</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">13</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">eax</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401116</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">16</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">add</span>    <span class="no">eax</span><span class="p">,</span><span class="no">edx</span>
+<span class="err">=&gt;</span> <span class="err">0</span><span class="nf">x401118</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">18</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">pop</span>    <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401119</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">19</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">ret</span>
+   <span class="na">...</span>
+   <span class="err">0</span><span class="nf">x401141</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">39</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">call</span>   <span class="mi">0x401106</span>
+<span class="err">[--------------------------------</span><span class="nf">stack---------------------------------</span><span class="p">]</span>
+<span class="err">0000|</span> <span class="err">0</span><span class="nf">x7fffffffdd80</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffddb0</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RBP</span><span class="p">,</span> <span class="no">RSP</span>
+<span class="err">0008|</span> <span class="err">0</span><span class="nf">x7fffffffdd88</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x401146</span> 
+<span class="p">[----------------------------------------------------------------------]</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><code>Function Epilogue</code>需要做两件事情，恢复寄存器<code>RBP</code>和<code>RSP</code>（这里的示例没有恢复<code>RSP</code>的内容，但过程基本一致）
@@ -432,28 +698,28 @@ RIP: 0x401118
 </span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-fallback" data-lang="fallback">[------------------------------registers-------------------------------]
-RBP: 0x7fffffffddb0
-RSP: 0x7fffffffdd90
-RIP: 0x401138
-[---------------------------------code---------------------------------]
-   0x401106 &lt;addtwo&gt;:   push   rbp
-   0x401107 &lt;addtwo+1&gt;:	mov    rbp,rsp
-   0x40110a &lt;addtwo+4&gt;:	mov    DWORD PTR [rbp-0x4],edi
-   0x40110d &lt;addtwo+7&gt;:	mov    DWORD PTR [rbp-0x8],esi
-   0x401110 &lt;addtwo+10&gt;:	mov    edx,DWORD PTR [rbp-0x4]
-   0x401113 &lt;addtwo+13&gt;:	mov    eax,DWORD PTR [rbp-0x8]
-   0x401116 &lt;addtwo+16&gt;:	add    eax,edx
-   0x401118 &lt;addtwo+18&gt;:	pop    rbp
-   0x401119 &lt;addtwo+19&gt;:	ret
-   ...
-   0x401141 &lt;main+39&gt;:	call   0x401106
-=&gt; 0x401138 &lt;main+3E&gt;:  mov    DWORD PTR [rbp-0x4],eax
-[--------------------------------stack---------------------------------]
-0000| 0x7fffffffdd90 --&gt; 0x7fffffffdea8 &lt;-- RSP
-0008| 0x7fffffffdd98 --&gt; 0x100401020
-0016| 0x7fffffffdda0 --&gt; 0x7fffffffdea0 &lt;-- RBP
-[----------------------------------------------------------------------]
+<pre class="chroma"><code class="language-asm" data-lang="asm"><span class="err">[------------------------------</span><span class="nf">registers-------------------------------</span><span class="p">]</span>
+<span class="nl">RBP:</span> <span class="err">0</span><span class="nf">x7fffffffddb0</span>
+<span class="nl">RSP:</span> <span class="err">0</span><span class="nf">x7fffffffdd90</span>
+<span class="nl">RIP:</span> <span class="err">0</span><span class="nf">x401138</span>
+<span class="err">[---------------------------------</span><span class="nf">code---------------------------------</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401106</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">&gt;</span><span class="p">:</span>   <span class="no">push</span>   <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401107</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">1</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">rbp</span><span class="p">,</span><span class="no">rsp</span>
+   <span class="err">0</span><span class="nf">x40110a</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">4</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">edi</span>
+   <span class="err">0</span><span class="nf">x40110d</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">7</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">],</span><span class="no">esi</span>
+   <span class="err">0</span><span class="nf">x401110</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">10</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">edx</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401113</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">13</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">mov</span>    <span class="no">eax</span><span class="p">,</span><span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x8</span><span class="p">]</span>
+   <span class="err">0</span><span class="nf">x401116</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">16</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">add</span>    <span class="no">eax</span><span class="p">,</span><span class="no">edx</span>
+   <span class="err">0</span><span class="nf">x401118</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">18</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">pop</span>    <span class="no">rbp</span>
+   <span class="err">0</span><span class="nf">x401119</span> <span class="err">&lt;</span><span class="no">addtwo</span><span class="err">+</span><span class="mi">19</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">ret</span>
+   <span class="na">...</span>
+   <span class="err">0</span><span class="nf">x401141</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">39</span><span class="err">&gt;</span><span class="p">:</span>	<span class="no">call</span>   <span class="mi">0x401106</span>
+<span class="err">=&gt;</span> <span class="err">0</span><span class="nf">x401138</span> <span class="err">&lt;</span><span class="no">main</span><span class="err">+</span><span class="mi">3</span><span class="no">E</span><span class="err">&gt;</span><span class="p">:</span>  <span class="no">mov</span>    <span class="no">DWORD</span> <span class="no">PTR</span> <span class="p">[</span><span class="no">rbp-0x4</span><span class="p">],</span><span class="no">eax</span>
+<span class="err">[--------------------------------</span><span class="nf">stack---------------------------------</span><span class="p">]</span>
+<span class="err">0000|</span> <span class="err">0</span><span class="nf">x7fffffffdd90</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea8</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RSP</span>
+<span class="err">0008|</span> <span class="err">0</span><span class="nf">x7fffffffdd98</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x100401020</span>
+<span class="err">0016|</span> <span class="err">0</span><span class="nf">x7fffffffdda0</span> <span class="p">--</span><span class="err">&gt;</span> <span class="mi">0x7fffffffdea0</span> <span class="err">&lt;</span><span class="p">--</span> <span class="no">RBP</span>
+<span class="err">[----------------------------------------------------------------------]</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="参考">参考</h2>
