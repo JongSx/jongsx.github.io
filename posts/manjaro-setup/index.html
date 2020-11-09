@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/example.org\/posts\/manjaro-setup\/"
-        },"genre": "posts","wordcount":  169 ,
+        },"genre": "posts","wordcount":  192 ,
         "url": "http:\/\/example.org\/posts\/manjaro-setup\/","datePublished": "2020-10-30T10:16:31+08:00","dateModified": "2020-10-30T10:16:31+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
@@ -105,7 +105,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Manjaro Setup</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-30">2020-10-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 169 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-10-30">2020-10-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 192 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -118,6 +118,8 @@
       <ul>
         <li><a href="#设置登陆界面显示在外接显示器上">设置登陆界面显示在外接显示器上</a></li>
         <li><a href="#fcitx5-无法在部分应用中使用">fcitx5 无法在部分应用中使用</a></li>
+        <li><a href="#fcitx5-主题">fcitx5 主题</a></li>
+        <li><a href="#linux-header-安装">linux-header 安装</a></li>
       </ul>
     </li>
     <li><a href="#参考">参考</a></li>
@@ -205,13 +207,32 @@ QT_IM_MODULE  DEFAULT=fcitx
 XMODIFIERS    DEFAULT=\@im=fcitx
 </code></pre></td></tr></table>
 </div>
-</div><p>安装fcitx5和中文输入法的命令如下，</p>
+</div><p>安装<code>fcitx5</code>和中文输入法的命令如下，</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-shell" data-lang="shell">pacman -S fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-gtk fcitx5-qt
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="fcitx5-主题">fcitx5 主题</h3>
+<p>推荐主题<a href="https://github.com/hosxy/Fcitx5-Material-Color" target="_blank" rel="noopener noreffer">Material-Color</a>
+安装方法参照项目的<code>README</code>即可。</p>
+<h3 id="linux-header-安装">linux-header 安装</h3>
+<p>如果你第一次安装<code>VMware Workstation</code>，它会提示你需要安装对应的<code>linux-headers</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"># 查找可用的linux-headers
+pacman -Ss linux-headers
+# 安装所需的linux-headers，其中XX为你所需的版本号
+pacman -S linuxXX linuxXX-headers
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="参考">参考</h2>
