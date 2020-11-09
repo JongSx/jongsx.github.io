@@ -1,23 +1,23 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Trganda&#39;s Blog</title>
-        <link>http://example.org/</link>
+        <link>https://www.jongsx.com/</link>
         <description>Trganda&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2020 22:57:07 &#43;0000</lastBuildDate>
-            <atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+            <atom:link href="https://www.jongsx.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>Gnome Builder Beautifier</title>
-    <link>http://example.org/posts/gnome-builder-beautifier/</link>
+    <link>https://www.jongsx.com/posts/gnome-builder-beautifier/</link>
     <pubDate>Mon, 09 Nov 2020 16:21:02 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/gnome-builder-beautifier/</guid>
+    <guid>https://www.jongsx.com/posts/gnome-builder-beautifier/</guid>
     <description><![CDATA[Perface ]]></description>
 </item><item>
     <title>PWN Basic Part I</title>
-    <link>http://example.org/posts/pwn-basic-part-i/</link>
+    <link>https://www.jongsx.com/posts/pwn-basic-part-i/</link>
     <pubDate>Wed, 04 Nov 2020 15:55:34 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/pwn-basic-part-i/</guid>
+    <guid>https://www.jongsx.com/posts/pwn-basic-part-i/</guid>
     <description><![CDATA[前言 以下内容记录我学习pwn的过程，通过NTUSTISC的教学视频[1]来学习pwn基础知识，后续会分为几个部分一直写下去。
 需要具备的基础知识：
  C语言 汇编语言  会用到的工具：
@@ -26,18 +26,18 @@ Pwntools，使用示例 使用python 3.x。
 常用的函数    函数 功能     p64(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo;   u64(str) b&rsquo;\x0c\xb0\xce\xfa\x00\x00\x00\x00&rsquo; =&gt; 4207849484   p32(int) 0xfaceb00c =&gt; b&rsquo;\x0c\xb0\xce\xfa&rsquo;   u32(str) b&rsquo;\x0c\xb0\xce\xfa&rsquo; =&gt; 4207849484   remote(host, port) / process(path) 与本地或远程的程序建立连接   .recv(int) 接收指定数量的字符   .recvuntil(str) 接收指定字符串以及它前面的内容   .recvline() 与.recvuntil('\n&rsquo;)作用一样   .]]></description>
 </item><item>
     <title>Manjaro Setup</title>
-    <link>http://example.org/posts/manjaro-setup/</link>
+    <link>https://www.jongsx.com/posts/manjaro-setup/</link>
     <pubDate>Fri, 30 Oct 2020 10:16:31 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/manjaro-setup/</guid>
+    <guid>https://www.jongsx.com/posts/manjaro-setup/</guid>
     <description><![CDATA[前言 此处记录我安装完manjaro with gnome后进行的部分配置，和碰到的问题。下面为系统配置。
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19  ██████████████████ ████████ *@manjaro ██████████████████ ████████ --------------- ██████████████████ ████████ OS: Manjaro Linux x86_64 ██████████████████ ████████ Host: HLY-WX9XX M1010 ████████ ████████ Kernel: 5.8.16-2-MANJARO ████████ ████████ ████████ Uptime: 52 mins ████████ ████████ ████████ Packages: 1146 (pacman) ████████ ████████ ████████ Shell: zsh 5.8 ████████ ████████ ████████ Resolution: 1920x1080 ████████ ████████ ████████ DE: GNOME 3.]]></description>
 </item><item>
     <title>Vim Usage</title>
-    <link>http://example.org/posts/vim-usage/</link>
+    <link>https://www.jongsx.com/posts/vim-usage/</link>
     <pubDate>Tue, 20 Oct 2020 22:41:39 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/vim-usage/</guid>
+    <guid>https://www.jongsx.com/posts/vim-usage/</guid>
     <description><![CDATA[介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。 如果你是第一次接触vim，并想要学习如何使用它，那这个网站Interactive Vim Tutorial会是个不错的选择，你可以使用交互式的方式学习如何使用vim。
  下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
  常用命令 下面列出我常用到的命令和其作用。
@@ -53,10 +53,10 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
  创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。]]></description>
 </item><item>
     <title>Hugo 构建Github Pages</title>
-    <link>http://example.org/posts/build-website-with-hugo/</link>
+    <link>https://www.jongsx.com/posts/build-website-with-hugo/</link>
     <pubDate>Mon, 19 Oct 2020 23:25:57 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/build-website-with-hugo/</guid>
+    <guid>https://www.jongsx.com/posts/build-website-with-hugo/</guid>
     <description><![CDATA[背景 决定从Hexo迁移至Hugo，不再使用Hexo了。由于Hexo的官方文档缺乏维护，对我而且使用起来不方便，其次也不利于主题的开发。迁移的方法并不复杂，下面让我们开始吧。
 前置需求 我们需要，
  一个your_github_user_name.github.io仓库； 一个用于保存Hugo内容的仓库（假设名字为blog）； travis ci账户，使用github账户登录并赋予其访问相关仓库的权限即可； 有条件的话，可以申请一个自己的域名。  编写 .travis.yml 现在假设你已经将Hugo创建的文件保存至blog仓库了，为了让travis ci帮我们进行自动部署，还需要在blog仓库的根目录下放置一个.travis.yml配置文件，用于告知travis ci该如何进行操作。 .travis.yml文件的内容如下（仅限参考），
@@ -66,19 +66,19 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
 参考  Github Pages Deployment: https://docs.travis-ci.com/user/deployment/pages/  ]]></description>
 </item><item>
     <title>删除Git Submodule</title>
-    <link>http://example.org/posts/how-to-remove-git-submodule/</link>
+    <link>https://www.jongsx.com/posts/how-to-remove-git-submodule/</link>
     <pubDate>Mon, 19 Oct 2020 20:17:24 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/how-to-remove-git-submodule/</guid>
+    <guid>https://www.jongsx.com/posts/how-to-remove-git-submodule/</guid>
     <description><![CDATA[问题 git中没有提供直接删除submodule的命令，所以当我们想要删除某个submodule时，会不知所措。
 方法 github上有人给出了删除submodule的方法，步骤如下：
  删除.gitmodules文件中的相关内容 删除.git/config文件中的相关内容 执行git rm --cached path_to_your_submodule(不要在后面加斜杠) 执行rm -rf .git/modules/path_to_your_submodule(不要在后面加斜杠) 删除你的submodules文件，执行rm -rf path_to_your_submodule 执行git add .gitmodules并commit  参考  delete_git_submodule: https://gist.github.com/myusuf3/7f645819ded92bda6677  ]]></description>
 </item><item>
     <title>WSL中开启，SSh Agent自启动</title>
-    <link>http://example.org/posts/ssh-agent-startup-on-wsl/</link>
+    <link>https://www.jongsx.com/posts/ssh-agent-startup-on-wsl/</link>
     <pubDate>Mon, 19 Oct 2020 16:12:16 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://example.org/posts/ssh-agent-startup-on-wsl/</guid>
+    <guid>https://www.jongsx.com/posts/ssh-agent-startup-on-wsl/</guid>
     <description><![CDATA[ohmyzsh 插件 在安装了ohmyzsh的情况下，编辑.vimrc文件，并启用ssh-agent插件即可。插件会在开启zsh时，启动ssh-agent，并添加.ssh目录下的identifier。
 参考  ssh-agent : https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent  ]]></description>
 </item></channel>
