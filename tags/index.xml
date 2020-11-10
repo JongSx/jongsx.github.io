@@ -1,7 +1,7 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Tags - 标签 - Trganda&#39;s Blog</title>
+        <title>Tags - Tag - Trganda&#39;s Blog</title>
         <link>https://www.jongsx.com/tags/</link>
-        <description>Tags - 标签 - Trganda&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://www.jongsx.com/tags/" rel="self" type="application/rss+xml" /></channel>
+        <description>Tags - Tag - Trganda&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><atom:link href="https://www.jongsx.com/tags/" rel="self" type="application/rss+xml" /></channel>
 </rss>
