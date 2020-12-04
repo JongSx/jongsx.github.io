@@ -3,7 +3,15 @@
         <title>All Posts - Trganda&#39;s Blog</title>
         <link>https://www.jongsx.com/posts/</link>
         <description>All Posts | Trganda&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 09 Nov 2020 16:21:02 &#43;0800</lastBuildDate><atom:link href="https://www.jongsx.com/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 04 Dec 2020 10:15:14 &#43;0800</lastBuildDate><atom:link href="https://www.jongsx.com/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Hugo Theme Developlment I</title>
+    <link>https://www.jongsx.com/posts/hugo-theme-developlment-i/</link>
+    <pubDate>Fri, 04 Dec 2020 10:15:14 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://www.jongsx.com/posts/hugo-theme-developlment-i/</guid>
+    <description><![CDATA[.Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code.]]></description>
+</item><item>
     <title>Gnome Builder Beautifier</title>
     <link>https://www.jongsx.com/posts/gnome-builder-beautifier/</link>
     <pubDate>Mon, 09 Nov 2020 16:21:02 &#43;0800</pubDate>

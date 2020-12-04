@@ -5,31 +5,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Gnome Builder Beautifier - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="Gnome Builder Beautifier" />
-<meta property="og:description" content="Configuration of Beautifier plugins If you installed the gnome builder with Beautifier plugins (default). You will find it&rsquo;s not support c&#43;&#43;, since we have no config file for c&#43;&#43; language.
-Reference  uncrusify: https://github.com/uncrustify/uncrustify full configration of uncrusify: http://uncrustify.sourceforge.net/config.txt  " />
+        <title>Hugo Theme Developlment I - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="Hugo Theme Developlment I" />
+<meta property="og:description" content=".Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jongsx.com/posts/gnome-builder-beautifier/" />
-<meta property="article:published_time" content="2020-11-09T16:21:02+08:00" />
-<meta property="article:modified_time" content="2020-11-09T16:21:02+08:00" />
+<meta property="og:url" content="https://www.jongsx.com/posts/hugo-theme-developlment-i/" />
+<meta property="article:published_time" content="2020-12-04T10:15:14+08:00" />
+<meta property="article:modified_time" content="2020-12-04T10:15:14+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Gnome Builder Beautifier"/>
-<meta name="twitter:description" content="Configuration of Beautifier plugins If you installed the gnome builder with Beautifier plugins (default). You will find it&rsquo;s not support c&#43;&#43;, since we have no config file for c&#43;&#43; language.
-Reference  uncrusify: https://github.com/uncrustify/uncrustify full configration of uncrusify: http://uncrustify.sourceforge.net/config.txt  "/>
+<meta name="twitter:title" content="Hugo Theme Developlment I"/>
+<meta name="twitter:description" content=".Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code."/>
 <meta name="application-name" content="Trganda&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Trganda&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.jongsx.com/posts/gnome-builder-beautifier/" /><link rel="prev" href="https://www.jongsx.com/posts/pwn-basic-part-i/" /><link rel="next" href="https://www.jongsx.com/posts/hugo-theme-developlment-i/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://www.jongsx.com/posts/hugo-theme-developlment-i/" /><link rel="prev" href="https://www.jongsx.com/posts/gnome-builder-beautifier/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Gnome Builder Beautifier",
+        "headline": "Hugo Theme Developlment I",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/www.jongsx.com\/posts\/gnome-builder-beautifier\/"
-        },"genre": "posts","wordcount":  38 ,
-        "url": "https:\/\/www.jongsx.com\/posts\/gnome-builder-beautifier\/","datePublished": "2020-11-09T16:21:02+08:00","dateModified": "2020-11-09T16:21:02+08:00","publisher": {
+            "@id": "https:\/\/www.jongsx.com\/posts\/hugo-theme-developlment-i\/"
+        },"genre": "posts","wordcount":  57 ,
+        "url": "https:\/\/www.jongsx.com\/posts\/hugo-theme-developlment-i\/","datePublished": "2020-12-04T10:15:14+08:00","dateModified": "2020-12-04T10:15:14+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
                 "@type": "Person",
@@ -103,9 +103,9 @@ Reference  uncrusify: https://github.com/uncrustify/uncrustify full configration
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Gnome Builder Beautifier</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-category">included in <a href="/categories/gnome-builder/"><i class="far fa-folder fa-fw"></i>Gnome Builder</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-11-09">2020-11-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;38 words&nbsp;
+        </div><article class="page single"><h1 class="single-title animated flipInX">Hugo Theme Developlment I</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-04">2020-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;57 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -116,25 +116,38 @@ Reference  uncrusify: https://github.com/uncrustify/uncrustify full configration
   <ul>
     <li>
       <ul>
-        <li><a href="#configuration-of-beautifier-plugins">Configuration of Beautifier plugins</a></li>
-        <li><a href="#reference">Reference</a></li>
+        <li><a href="#content">.Content</a></li>
+        <li><a href="#hidden-the-code">Hidden the code</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h3 id="configuration-of-beautifier-plugins">Configuration of Beautifier plugins</h3>
-<p>If you installed the gnome builder with <code>Beautifier plugins</code> (default).
-You will find it&rsquo;s not support <code>c++</code>, since we have no config file for <code>c++</code> language.</p>
-<h3 id="reference">Reference</h3>
-<ol>
-<li>uncrusify: <a href="https://github.com/uncrustify/uncrustify">https://github.com/uncrustify/uncrustify</a></li>
-<li>full configration of uncrusify: <a href="http://uncrustify.sourceforge.net/config.txt">http://uncrustify.sourceforge.net/config.txt</a></li>
-</ol>
+            </div><div class="content" id="content"><h3 id="content">.Content</h3>
+<p>In hugo, you can use <code>.Content</code> to get the rendered content of your markdown file.
+And it&rsquo;s looks like below;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">your content
+...
+your code
+...
+your content
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="hidden-the-code">Hidden the code</h3>
+<p>What if your want to add a toolbar to add some ability, like copy or hidden the content of code.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2020-11-09</span>
+                <span>Updated on 2020-12-04</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -153,12 +166,9 @@ You will find it&rsquo;s not support <code>c++</code>, since we have no config f
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/pwn-basic-part-i/" class="prev" rel="prev" title="PWN Basic Part I"><i class="fas fa-angle-left fa-fw"></i>PWN Basic Part I</a>
-            <a href="/posts/hugo-theme-developlment-i/" class="next" rel="next" title="Hugo Theme Developlment I">Hugo Theme Developlment I<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/gnome-builder-beautifier/" class="prev" rel="prev" title="Gnome Builder Beautifier"><i class="fas fa-angle-left fa-fw"></i>Gnome Builder Beautifier</a></div>
 </div>
-<div id="comments"><div id="gitalk" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://github.com/gitalk/gitalk"></a>Gitalk</a>.
-            </noscript></div></article></div>
+</article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.68.3">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Trganda</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
@@ -170,5 +180,5 @@ You will find it&rsquo;s not support <code>c++</code>, since we have no config f
             </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw"></i>
             </a>
-        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"gitalk":{"admin":["trganda"],"clientID":"3d1bab1c139fe80d7c9e","clientSecret":"312eeee40acc0b1ac8dc524703231b3a37beff35","id":"2020-11-09T16:21:02+08:00","owner":"trganda","repo":"comments-storage","title":"Gnome Builder Beautifier"}},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/lunr/lunr.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

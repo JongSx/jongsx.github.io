@@ -100,10 +100,11 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="links"><a href="https://github.com/trganda" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/ssh-agent-startup-on-wsl/">WSL中开启，SSh Agent自启动</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">ohmyzsh 插件 在安装了ohmyzsh的情况下，编辑.vimrc文件，并启用ssh-agent插件即可。插件会在开启zsh时，启动ssh-agent，并添加.ssh目录下的identifier。
-参考  ssh-agent : https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent  </div><div class="post-footer">
-        <a href="/posts/ssh-agent-startup-on-wsl/">Read More</a></div>
+        <a href="/posts/how-to-remove-git-submodule/">删除Git Submodule</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">问题 git中没有提供直接删除submodule的命令，所以当我们想要删除某个submodule时，会不知所措。
+方法 github上有人给出了删除submodule的方法，步骤如下：
+ 删除.gitmodules文件中的相关内容 删除.git/config文件中的相关内容 执行git rm --cached path_to_your_submodule(不要在后面加斜杠) 执行rm -rf .git/modules/path_to_your_submodule(不要在后面加斜杠) 删除你的submodules文件，执行rm -rf path_to_your_submodule 执行git add .gitmodules并commit  参考  delete_git_submodule: https://gist.github.com/myusuf3/7f645819ded92bda6677  </div><div class="post-footer">
+        <a href="/posts/how-to-remove-git-submodule/">Read More</a></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -121,6 +122,10 @@
                 </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/7/">7</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/8/">8</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

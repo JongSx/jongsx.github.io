@@ -100,21 +100,10 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="links"><a href="https://github.com/trganda" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/vim-usage/">Vim Usage</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-20">2020-10-20</time></span></div><div class="content">介绍 以下记录使用vim的过程中学习到的东西（快捷键，插件，遇到的问题等）。 如果你是第一次接触vim，并想要学习如何使用它，那这个网站Interactive Vim Tutorial会是个不错的选择，你可以使用交互式的方式学习如何使用vim。
- 下面提及的，形如a, b的快捷键，是指先按下a，再按下b。
- 常用命令 下面列出我常用到的命令和其作用。
-分屏  垂直分屏：:vsplit； 水平分屏：:split；  你可以用快捷键的方式，打开一个垂直或者水平分配的窗口。
- 垂直分屏：ctrl+w, v； 水平分屏：ctrl+w, s；  控制分屏窗口大小 默认情况下，通过分屏命令弹出的窗口都是均匀划分的。你可以像下面这样调整当前窗口的大小（高和宽），
- 调整高度：:resize number； 调整宽度：:vertical resize number；  也可以用递增或递减的方式来调整，
- 增加高度：:resize +number； 减少高度：:resize -number；  如果你觉得这样很麻烦，可以使用快捷键，
- 增加宽度：ctrl+w, &gt;； 增加高度：ctrl+w, +； 减少宽度：ctrl+w, &lt;； 减少高度：ctrl+w, -；  需要重置分屏窗口的大小时，使用ctrl+w, =。
-切换窗口 在通过:split和vsplit命令进行划分之后，需要进行窗口的切换。
-可以双击ctrl + w进行轮流切换，也可以通过ctrl + w + 方向键（或者hjkl）来切换到指定的窗口。
-Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是，你可以创建一个新的tab。 tab会以数字下标排序，显示在顶部，像下面这样,
-常用的操控tab的命令如下，
- 创建一个新的tab：:tabnew 在tab间进行切换：gt 切换至下一个tab：:tabnext 切换至上一个tab：:tabprevious 切换至第一个tab：:tabfirst 切换至最后一个tab：:tablast 将当前tab移动到某个index：:tabmove number，number从0开始  拓展工具 推荐使用vimrc。 vimrc是vim的一款配置工具，安装后会自动帮你配置vim的样式，字体和各类插件。</div><div class="post-footer">
-        <a href="/posts/vim-usage/">Read More</a></div>
+        <a href="/posts/ssh-agent-startup-on-wsl/">WSL中开启，SSh Agent自启动</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">ohmyzsh 插件 在安装了ohmyzsh的情况下，编辑.vimrc文件，并启用ssh-agent插件即可。插件会在开启zsh时，启动ssh-agent，并添加.ssh目录下的identifier。
+参考  ssh-agent : https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/ssh-agent  </div><div class="post-footer">
+        <a href="/posts/ssh-agent-startup-on-wsl/">Read More</a></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -123,25 +112,13 @@ Tab 当你需要打开多个文件，而当前tab又没有多余空间使用是�
                     <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/3/">3</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
-                        <a href="/page/4/">4</a>
-                    </span>
-                </li><li class="page-item active">
-                    <span class="page-link">
-                        <a href="/page/5/">5</a>
-                    </span>
-                </li><li class="page-item ">
-                    <span class="page-link">
                         <a href="/page/6/">6</a>
                     </span>
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/7/">7</a>
                     </span>
-                </li><li class="page-item ">
+                </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/8/">8</a>
                     </span>

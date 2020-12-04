@@ -100,11 +100,15 @@
         alt="/images/avatar.jpg"
         title="/images/avatar.jpg" /></a></div><div class="links"><a href="https://github.com/trganda" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/posts/how-to-remove-git-submodule/">删除Git Submodule</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">问题 git中没有提供直接删除submodule的命令，所以当我们想要删除某个submodule时，会不知所措。
-方法 github上有人给出了删除submodule的方法，步骤如下：
- 删除.gitmodules文件中的相关内容 删除.git/config文件中的相关内容 执行git rm --cached path_to_your_submodule(不要在后面加斜杠) 执行rm -rf .git/modules/path_to_your_submodule(不要在后面加斜杠) 删除你的submodules文件，执行rm -rf path_to_your_submodule 执行git add .gitmodules并commit  参考  delete_git_submodule: https://gist.github.com/myusuf3/7f645819ded92bda6677  </div><div class="post-footer">
-        <a href="/posts/how-to-remove-git-submodule/">Read More</a></div>
+        <a href="/posts/build-website-with-hugo/">Hugo 构建Github Pages</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-publish">published on <time datetime="2020-10-19">2020-10-19</time></span></div><div class="content">背景 决定从Hexo迁移至Hugo，不再使用Hexo了。由于Hexo的官方文档缺乏维护，对我而且使用起来不方便，其次也不利于主题的开发。迁移的方法并不复杂，下面让我们开始吧。
+前置需求 我们需要，
+ 一个your_github_user_name.github.io仓库； 一个用于保存Hugo内容的仓库（假设名字为blog）； travis ci账户，使用github账户登录并赋予其访问相关仓库的权限即可； 有条件的话，可以申请一个自己的域名。  编写 .travis.yml 现在假设你已经将Hugo创建的文件保存至blog仓库了，为了让travis ci帮我们进行自动部署，还需要在blog仓库的根目录下放置一个.travis.yml配置文件，用于告知travis ci该如何进行操作。 .travis.yml文件的内容如下（仅限参考），
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24  # 使用Ubuntu20.04dist:focallanguage:gogo:- 1.15# 安装Hugobefore_install:- sudoapt-getupdate- sudoapt-getinstallhugo-y--fix-missingscript:- hugo-Ddeploy:repo:your_github_user_name/your_github_user_name.github.ioprovider:pagesskip-cleanup:truegithub-token:$GH_TOKENkeep-history:true# 目前github上创建仓库后的主分支名变为了main，你需要把*.github.io的主分支名改为mastertarget_branch:masteron:branch:mainlocal-dir:public# 自定义域名，可以不添加该字段fqdn:your_domain  deploy字段中各个值的含义，可以参看travis ci的官方文档[1]。
+将.travis.yml文件提交至你的blog仓库中，之后我们需要在travis ci中，进行配置，为我们的blog仓库添加一个环境变量（GH_TOKEN）。
+你可以在 github.com-&gt;setting-&gt;Developer setting-&gt;Personal access tokens中生成一个，并设置相应权限。
+参考  Github Pages Deployment: https://docs.travis-ci.com/user/deployment/pages/  </div><div class="post-footer">
+        <a href="/posts/build-website-with-hugo/">Read More</a></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -126,6 +130,10 @@
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/7/">7</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/8/">8</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

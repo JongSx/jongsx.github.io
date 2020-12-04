@@ -2,10 +2,11 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
+            <loc>https://www.jongsx.com/posts/hugo-theme-developlment-i/</loc><lastmod>2020-12-04T10:15:14&#43;08:00</lastmod></url><url>
+            <loc>https://www.jongsx.com/posts/</loc><lastmod>2020-12-04T10:15:14&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/categories/</loc><lastmod>2020-11-09T16:21:02&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/categories/gnome-builder/</loc><lastmod>2020-11-09T16:21:02&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/posts/gnome-builder-beautifier/</loc><lastmod>2020-11-09T16:21:02&#43;08:00</lastmod></url><url>
-            <loc>https://www.jongsx.com/posts/</loc><lastmod>2020-11-09T16:52:26&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/posts/pwn-basic-part-i/</loc><lastmod>2020-11-09T16:52:26&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/posts/manjaro-setup/</loc><lastmod>2020-10-30T10:16:31&#43;08:00</lastmod></url><url>
             <loc>https://www.jongsx.com/posts/vim-usage/</loc><lastmod>2020-10-20T22:41:39&#43;08:00</lastmod></url><url>
