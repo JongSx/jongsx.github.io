@@ -6,7 +6,15 @@
         <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 03 Apr 2020 22:57:07 &#43;0000</lastBuildDate>
             <atom:link href="https://www.jongsx.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Hugo Theme Developlment I</title>
+    <title>Hugo Theme Development Part II - Centering images in Hugo</title>
+    <link>https://www.jongsx.com/posts/hugo-theme-development-part-ii/</link>
+    <pubDate>Fri, 04 Dec 2020 21:21:55 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://www.jongsx.com/posts/hugo-theme-development-part-ii/</guid>
+    <description><![CDATA[The problem As i was using hugo to build my blog, i encountered and unexpected snag. The page contained an image which i wanted to appear on the page centered. It&rsquo;s sounds like a 16-character problem solved straight out of muscle memory, right? Howerver, we can not centered image with markdown itself.
+The shortcodes of Hugo Hugo authors are acutely aware of the problem, and so Hugo does come with a solution of sorts shortcodes (and {{ &lt;figure&gt; }} shortcode in particular).]]></description>
+</item><item>
+    <title>Hugo Theme Developlment Part I</title>
     <link>https://www.jongsx.com/posts/hugo-theme-developlment-i/</link>
     <pubDate>Fri, 04 Dec 2020 10:15:14 &#43;0800</pubDate>
     <author>Author</author>
