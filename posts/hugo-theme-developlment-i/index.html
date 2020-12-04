@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Hugo Theme Developlment I - Trganda&#39;s Blog</title><meta name="Description" content=""><meta property="og:title" content="Hugo Theme Developlment I" />
 <meta property="og:description" content=".Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
-1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code." />
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code. Since the render of hugo will ouput the content directly, we need to write a javascript to add additional content for rendered markdown file." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jongsx.com/posts/hugo-theme-developlment-i/" />
 <meta property="article:published_time" content="2020-12-04T10:15:14+08:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hugo Theme Developlment I"/>
 <meta name="twitter:description" content=".Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
-1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code."/>
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code. Since the render of hugo will ouput the content directly, we need to write a javascript to add additional content for rendered markdown file."/>
 <meta name="application-name" content="Trganda&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Trganda&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/www.jongsx.com\/posts\/hugo-theme-developlment-i\/"
-        },"genre": "posts","wordcount":  57 ,
+        },"genre": "posts","wordcount":  362 ,
         "url": "https:\/\/www.jongsx.com\/posts\/hugo-theme-developlment-i\/","datePublished": "2020-12-04T10:15:14+08:00","dateModified": "2020-12-04T10:15:14+08:00","publisher": {
             "@type": "Organization",
             "name": "Trganda"},"author": {
@@ -104,9 +104,9 @@
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Hugo Theme Developlment I</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-04">2020-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;57 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Trganda</a></span>&nbsp;<span class="post-category">included in <a href="/categories/hugo-themes/"><i class="far fa-folder fa-fw"></i>Hugo Themes</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2020-12-04">2020-12-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;362 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -117,7 +117,11 @@
     <li>
       <ul>
         <li><a href="#content">.Content</a></li>
-        <li><a href="#hidden-the-code">Hidden the code</a></li>
+        <li><a href="#hidden-the-code">Hidden the code</a>
+          <ul>
+            <li><a href="#write-script">Write script</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -142,7 +146,161 @@ your content
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="hidden-the-code">Hidden the code</h3>
-<p>What if your want to add a toolbar to add some ability, like copy or hidden the content of code.</p>
+<p>What if your want to add a toolbar to add some ability, like copy or hidden the content of code.
+Since the render of hugo will ouput the content directly, we need to write a <code>javascript</code> to add additional content for rendered markdown file.</p>
+<h4 id="write-script">Write script</h4>
+<p>suppose your configuration of markup looks like this.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">markup</span><span class="p">]</span>
+    <span class="c"># Highlight (https://gohugo.io/content-management/syntax-highlighting)</span>
+    <span class="p">[</span><span class="nx">markup</span><span class="p">.</span><span class="nx">highlight</span><span class="p">]</span>
+        <span class="nx">codeFences</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="nx">guessSyntax</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="nx">lineNos</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="nx">lineNumbersInTable</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="nx">noClasses</span> <span class="p">=</span> <span class="kc">false</span>
+    <span class="p">[</span><span class="nx">markup</span><span class="p">.</span><span class="nx">goldmark</span><span class="p">]</span>
+        <span class="p">[</span><span class="nx">markup</span><span class="p">.</span><span class="nx">goldmark</span><span class="p">.</span><span class="nx">extensions</span><span class="p">]</span>
+            <span class="nx">definitionList</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">footnote</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">linkify</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">strikethrough</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">table</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">taskList</span> <span class="p">=</span> <span class="kc">true</span>
+            <span class="nx">typographer</span> <span class="p">=</span> <span class="kc">true</span>
+        <span class="p">[</span><span class="nx">markup</span><span class="p">.</span><span class="nx">goldmark</span><span class="p">.</span><span class="nx">renderer</span><span class="p">]</span>
+            <span class="nx">unsafe</span> <span class="p">=</span> <span class="kc">true</span>
+    <span class="p">[</span><span class="nx">markup</span><span class="p">.</span><span class="nx">tableOfContents</span><span class="p">]</span>
+        <span class="nx">startLevel</span> <span class="p">=</span> <span class="mi">2</span>
+        <span class="nx">endLevel</span> <span class="p">=</span> <span class="mi">6</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The generated html of your code looks like below,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;highlight&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;chroma&#34;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;lntable&#34;</span><span class="p">&gt;</span>
+            ...
+                <span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;chroma&#34;</span><span class="p">&gt;</span>
+                    <span class="p">&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>
+                <span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+            ...
+        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So we need to add a borther node of <code>&lt;table class=&quot;lntable&gt;&lt;/table&gt;</code>, the script is show below.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript">    <span class="k">this</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.highlight &gt; .chroma&#39;</span><span class="p">),</span> <span class="nx">$chroma</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="nx">$codeElements</span> <span class="o">=</span> <span class="nx">$chroma</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;pre.chroma &gt; code&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">$codeElements</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kr">const</span> <span class="nx">$code</span> <span class="o">=</span> <span class="nx">$codeElements</span><span class="p">[</span><span class="nx">$codeElements</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+            <span class="kr">const</span> <span class="nx">$header</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+            <span class="nx">$header</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;code-header &#39;</span> <span class="o">+</span> <span class="nx">$code</span><span class="p">.</span><span class="nx">className</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+
+            <span class="c1">// Title of code space
+</span><span class="c1"></span>            <span class="kr">const</span> <span class="nx">$title</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+            <span class="nx">$title</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;code-title&#39;</span><span class="p">);</span>
+            <span class="nx">$title</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="s1">&#39;afterbegin&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;i class=&#34;arrow fas fa-chevron-right fa-fw&gt;&lt;/i&gt;&#39;</span><span class="p">);</span>
+            <span class="nx">$title</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                <span class="nx">$chroma</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">toggle</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+            <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+            <span class="nx">$header</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">$title</span><span class="p">);</span>
+            <span class="c1">// Showed on title while code is shrinking
+</span><span class="c1"></span>            <span class="kr">const</span> <span class="nx">$ellipses</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+            <span class="nx">$ellipses</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="s1">&#39;afterbegin&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;i class=&#34;fas fa-ellipsis-h fa-fw&#34;&gt;&lt;/i&gt;&#39;</span><span class="p">);</span>
+            <span class="nx">$ellipses</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;ellipses&#39;</span><span class="p">);</span>
+            <span class="nx">$ellipses</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                <span class="nx">$chroma</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">toggle</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">);</span>
+            <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+            <span class="nx">$header</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">$ellipses</span><span class="p">);</span>
+            <span class="c1">// Copy button
+</span><span class="c1"></span>            <span class="kr">const</span> <span class="nx">$copy</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+            <span class="nx">$copy</span><span class="p">.</span><span class="nx">insertAdjacentHTML</span><span class="p">(</span><span class="s1">&#39;afterbegin&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;i class=&#34;far fa-copy fa-fw&#34;&gt;&lt;/i&gt;&#39;</span><span class="p">);</span>
+            <span class="nx">$copy</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;copy&#39;</span><span class="p">);</span>
+            <span class="kr">const</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">$code</span><span class="p">.</span><span class="nx">innerText</span><span class="p">;</span>
+            <span class="nx">$header</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">$copy</span><span class="p">);</span>
+            <span class="nx">$chroma</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">$header</span><span class="p">,</span> <span class="nx">$chroma</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>After that, you can provide stylesheet file for beautify.</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

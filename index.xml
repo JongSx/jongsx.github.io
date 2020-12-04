@@ -12,7 +12,7 @@
     <author>Author</author>
     <guid>https://www.jongsx.com/posts/hugo-theme-developlment-i/</guid>
     <description><![CDATA[.Content In hugo, you can use .Content to get the rendered content of your markdown file. And it&rsquo;s looks like below;
-1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code.]]></description>
+1 2 3 4 5  your content ... your code ... your content   Hidden the code What if your want to add a toolbar to add some ability, like copy or hidden the content of code. Since the render of hugo will ouput the content directly, we need to write a javascript to add additional content for rendered markdown file.]]></description>
 </item><item>
     <title>Gnome Builder Beautifier</title>
     <link>https://www.jongsx.com/posts/gnome-builder-beautifier/</link>
